@@ -1,0 +1,45 @@
+---
+import { siteConfig } from "../config";
+---
+
+<section id="resume" class="p-8 sm:p-12 md:p-16 lg:p-24">
+  <div class="text-center space-y-6">
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900">
+      Resume
+    </h2>
+    <div
+      class="w-[75px] h-[5px] mx-auto mt-2 rounded-full"
+      style={`background-color: ${siteConfig.accentColor}`}
+    ></div>
+
+    <p class="text-lg sm:text-xl md:text-2xl text-gray-600 max-w-2xl mx-auto">
+      Want the full details of my experience and projects?  
+      Check out my resume below.
+    </p>
+
+    {siteConfig.resume && (
+      <div class="flex justify-center gap-4">
+        <!-- View Online -->
+        <a
+          href={siteConfig.resume.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center rounded-xl px-6 py-3 font-semibold shadow-md text-white transition hover:opacity-90"
+          style={`background-color: ${siteConfig.accentColor}`}
+        >
+          {siteConfig.resume.label}
+        </a>
+
+        <!-- Optional: Download -->
+        <a
+          href={siteConfig.resume.link}
+          download
+          class="inline-flex items-center rounded-xl px-6 py-3 font-semibold shadow-md border transition hover:bg-gray-100"
+          style={`border-color: ${siteConfig.accentColor}; color: ${siteConfig.accentColor}`}
+        >
+          Download PDF
+        </a>
+      </div>
+    )}
+  </div>
+</section>
