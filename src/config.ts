@@ -103,4 +103,8 @@ export const siteConfig = {
       achievements: ["3.8 GPA", "Dean's List"],
     },
   ],
+  resume: {
+    link: "/davidGloverResume2025.pdf",
+    label: "View Resume",
+  },
 };
