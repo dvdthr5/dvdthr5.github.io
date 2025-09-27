@@ -31,14 +31,14 @@ export const siteConfig = {
   ],
   projects: [
     {
-      name: "SlugHub",
+      name: "SlugHub - CruzHacks 2025",
       description:
         "Multi-page student app for UCSC: schedule input with bus timing, events integration with add-to-schedule, and anonymous class forums. Auth with MongoDB + bcrypt; course catalog/forums powered by scrapers and real data validation.",
       link: "https://github.com/dvdthr5/SlugHub",
       skills: ["PyQt6", "MongoDB", "Web Scraping", "Authentication"],
     },
     {
-      name: "SaveOurSlug",
+      name: "SaveOurSlug - CruzHacks 2024",
       description:
         "Hackathon project promoting campus sustainability. Gamified eco-friendly actions with Flask + JS, allowing students to log activities, compete on leaderboards, and boost awareness.",
       link: "https://github.com/dvdthr5/SaveOurSlugs",
