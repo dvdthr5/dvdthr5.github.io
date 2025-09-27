@@ -23,6 +23,18 @@ import { siteConfig } from "../config";
           {siteConfig.aboutMe}
         </p>
 
+        {siteConfig.resume && (
+          <a
+            href={siteConfig.resume.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center rounded-xl px-6 py-2.5 font-semibold shadow-md text-white transition hover:opacity-90"
+            style={`background-color: ${siteConfig.accentColor}`}
+          >
+            {siteConfig.resume.label}
+          </a>
+        )}
+
         <div class="pt-4">
           <div class="flex flex-wrap gap-3">
             {
