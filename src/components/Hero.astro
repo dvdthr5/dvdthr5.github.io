@@ -130,6 +130,14 @@ import { siteConfig } from "../config";
       height="100%"
       stroke-width={0}></rect>
   </svg>
+
+  //throw dvd
+   <button id="throw-dvd-btn" class="px-4 py-2 bg-blue-500 text-white rounded mb-4">
+  Throw DVD
+</button>
+
+<div id="dvd"></div>
+
   <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
     <div>
       <h2
@@ -161,6 +169,29 @@ import { siteConfig } from "../config";
 
   #name-text:hover .hover-black {
     color: black;
+  }
+  #dvd {
+    position: absolute;
+    top: 50px;
+    left: -200px;
+    width: 120px;
+    height: 120px;
+    background: url('/dvd.png') no-repeat center/contain;
+    display: none;
+    z-index: 20;
+  }
+
+  @keyframes rollAcross {
+    0% {
+      transform: translateX(0) rotate(0deg);
+    }
+    100% {
+      transform: translateX(120vw) rotate(1440deg);
+    }
+  }
+
+  .animate-dvd {
+    animation: rollAcross 3s linear forwards;
   }
 </style>
 
@@ -266,46 +297,22 @@ import { siteConfig } from "../config";
       )
     }
   </div>
+   <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const dvd = document.getElementById("dvd");
+      const button = document.getElementById("throw-dvd-btn");
+
+      button.addEventListener("click", () => {
+        dvd.style.display = "block";
+        dvd.classList.remove("animate-dvd");
+        void dvd.offsetWidth; // restart animation
+        dvd.classList.add("animate-dvd");
+
+        dvd.addEventListener("animationend", () => {
+          dvd.style.display = "none";
+        }, { once: true });
+      });
+    });
+  </script>
 </div>
 
-<style>
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 0.8s ease-out forwards;
-    opacity: 0;
-  }
-
-  .animation-delay-200 {
-    animation-delay: 0.2s;
-  }
-
-  .animation-delay-400 {
-    animation-delay: 0.4s;
-  }
-
-  .animation-delay-600 {
-    animation-delay: 0.6s;
-  }
-
-  #hero::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  width: 200px;
-  height: 200px;
-  background: url('/dvd.png') no-repeat center/contain;
-  opacity: 1;
-  z-index: 10; /* force it on top */
-}
-</style>
