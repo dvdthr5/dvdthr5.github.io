@@ -143,14 +143,14 @@ import { siteConfig } from "../config";
   style={{ color: siteConfig.accentColor }}
 
 >
-  I'm <span>David Glover</span>
+  I'm <span id ="name-toggle">David Glover</span>
 </h1>
      <script>
   document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById("name-toggle");
     el.addEventListener("click", () => {
       if (el.textContent.trim() === "David Glover") {
-        el.textContent = "AI Lover";
+        el.textContent = " a i  lover";
       } else {
         el.textContent = "David Glover";
       }
