@@ -141,19 +141,21 @@ import { siteConfig } from "../config";
   id="name-toggle"
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
   style={{ color: siteConfig.accentColor }}
-  onclick="toggleName()"
+
 >
   I'm <span>David Glover</span>
 </h1>
-      <script>
-  function toggleName() {
+     <script>
+  document.addEventListener("DOMContentLoaded", () => {
     const el = document.getElementById("name-toggle");
-    if (el.textContent.includes("David Glover")) {
-      el.textContent = "AI Lover";
-    } else {
-      el.textContent = "David Glover";
-    }
-  }
+    el.addEventListener("click", () => {
+      if (el.textContent.trim() === "David Glover") {
+        el.textContent = "AI Lover";
+      } else {
+        el.textContent = "David Glover";
+      }
+    });
+  });
 </script>
       <p
         class="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-gray-600 animate-fade-in animation-delay-400"
