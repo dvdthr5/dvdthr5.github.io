@@ -145,56 +145,28 @@ import { siteConfig } from "../config";
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
 >
   I'm 
-  <span id="name-text" style="color: {{ siteConfig.accentColor }}">
-    David Glover
+  <span id="name-text">
+    D<span class="hover-red">a</span>v<span class="hover-red">i</span>d 
+    G<span class="hover-red">l</span><span class="hover-red">o</span><span class="hover-red">v</span><span class="hover-red">e</span><span class="hover-red">r</span>
   </span>
 </h1>
 
 <style>
   #name-text {
-    transition: opacity 200ms ease;
-  }
-  #name-text.fading {
-    opacity: 0;
-  }
+  color: blue; /* starting color */
+  transition: color 0.3s ease;
+}
 
-  .letter {
-    display: inline-block;
-    text-align: center;
-    transition: opacity 0.3s ease;
-  }
+#name-text .hover-red {
+  transition: color 0.3s ease;
+}
 
-  .letter.hidden {
-    opacity: 0;        /* disappears but spacing stays */
-    visibility: hidden; /* optional: makes it non-readable */
-  }
+#name-text:hover .hover-red {
+  color: red;
+}
 
 </style>
 
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const nameEl = document.getElementById("name-text");
-    const original = "David Glover";
-    const alt = "\u00a0\u00a0a i\u00a0\u00a0\u00a0lover";
-    let toggled = false;
-
-    document.getElementById("name-toggle").addEventListener("click", () => {
-      nameEl.classList.add("fading");
-
-      const doSwap = () => {
-        nameEl.textContent = toggled ? original : alt;
-        nameEl.classList.remove("fading");
-        nameEl.removeEventListener("transitionend", doSwap);
-        toggled = !toggled;
-      };
-
-      nameEl.addEventListener("transitionend", doSwap);
-      setTimeout(() => {
-        if (nameEl.classList.contains("fading")) doSwap();
-      }, 200);
-    });
-  });
-</script>
 
 
 
