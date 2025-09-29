@@ -157,6 +157,18 @@ import { siteConfig } from "../config";
   #name-text.fading {
     opacity: 0;
   }
+
+  .letter {
+    display: inline-block;
+    text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .letter.hidden {
+    opacity: 0;        /* disappears but spacing stays */
+    visibility: hidden; /* optional: makes it non-readable */
+  }
+
 </style>
 
 <script>
