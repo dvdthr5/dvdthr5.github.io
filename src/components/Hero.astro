@@ -137,16 +137,17 @@ import { siteConfig } from "../config";
       >
         Spinning up new ideas, one disk at a time.
       </h2>
-      <h1 id="name-toggle" 
+      <h1 id="name-toggle"
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
-  style="color: var(--accent-color)">
+  style={{ color: siteConfig.accentColor }}
+>
   I'm 
   <span class="letter">D</span>
   <span class="letter">a</span>
   <span class="letter">v</span>
   <span class="letter">i</span>
   <span class="letter">d</span>
-  <span class="letter"> </span>
+  <span class="letter">&nbsp;</span>
   <span class="letter">G</span>
   <span class="letter">l</span>
   <span class="letter">o</span>
@@ -155,26 +156,38 @@ import { siteConfig } from "../config";
   <span class="letter">r</span>
 </h1>
 
+<style>
+  .letter {
+    display: inline-block;
+    min-width: 0.65em;         /* keeps spacing consistent */
+    text-align: center;
+    transition: opacity 0.3s ease;
+  }
+
+  .letter.hidden {
+    visibility: hidden;        /* hides but keeps space */
+    opacity: 0;
+  }
+</style>
+
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const nameToggle = document.getElementById("name-toggle");
+    const letters = document.querySelectorAll("#name-toggle .letter");
     let toggled = false;
 
-    nameToggle.addEventListener("click", () => {
-      const letters = nameToggle.querySelectorAll(".letter");
-
+    document.getElementById("name-toggle").addEventListener("click", () => {
       if (!toggled) {
-        // Hide certain letters to form "AI Lover"
+        // Hide everything except "AI Lover"
         letters.forEach((span, i) => {
-          if (![0, 1, 6, 7, 8, 9].includes(i)) { 
-            span.style.visibility = "hidden"; 
+          // Keep A (index 0), I (index 3), space (index 5),
+          // L (index 6), o (7), v (8), e (9), r (10)
+          if (![0, 3, 5, 6, 7, 8, 9, 10, 11].includes(i)) {
+            span.classList.add("hidden");
           }
         });
       } else {
-        // Reset all letters
-        letters.forEach(span => {
-          span.style.visibility = "visible";
-        });
+        // Reset back to David Glover
+        letters.forEach(span => span.classList.remove("hidden"));
       }
       toggled = !toggled;
     });
