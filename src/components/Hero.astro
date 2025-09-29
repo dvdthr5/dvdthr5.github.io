@@ -275,27 +275,38 @@ import { siteConfig } from "../config";
   }
 
   #hero::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 250px;
-    height: 250px;
-    background: url('/dvd.png') no-repeat center/contain;
-    transform: translate(-50%, -50%);
-    animation: spin 5s linear infinite;
-    opacity: 0.15; /* faint so text is still readable */
-    z-index: 0;
-  }
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  background: url('/dvd.png') no-repeat center/contain;
+  animation:
+    bounce 8s linear infinite,
+    spin 5s linear infinite;
+  opacity: 0.8; /* adjust visibility */
+  z-index: 0;
+}
 
-  @keyframes spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to   { transform: translate(-50%, -50%) rotate(360deg); }
-  }
+/* Bounce around edges */
+@keyframes bounce {
+  0%   { top: 0; left: 0; }
+  25%  { top: 0; left: calc(100% - 120px); }
+  50%  { top: calc(100% - 120px); left: calc(100% - 120px); }
+  75%  { top: calc(100% - 120px); left: 0; }
+  100% { top: 0; left: 0; }
+}
 
-  /* Ensure hero content stays above DVD */
-  #hero > * {
-    position: relative;
-    z-index: 1;
-  }
+/* Continuous spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Keep hero text/content above the DVD */
+#hero > * {
+  position: relative;
+  z-index: 1;
+}
 </style>
