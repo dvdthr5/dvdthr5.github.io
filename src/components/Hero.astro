@@ -137,20 +137,22 @@ import { siteConfig } from "../config";
       >
         Spinning up new ideas, one disk at a time.
       </h2>
+
+
+
       <h1
   id="name-toggle"
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
 >
-  I'm
-  <span id="name-text" style="color: {{ siteConfig.accentColor }}" aria-live="polite">
-    {{ siteConfig.name }}
+  I'm 
+  <span id="name-text" style="color: {{ siteConfig.accentColor }}">
+    David Glover
   </span>
 </h1>
 
 <style>
-  /* optional: a small fade when switching */
   #name-text {
-    transition: opacity 180ms ease;
+    transition: opacity 200ms ease;
   }
   #name-text.fading {
     opacity: 0;
@@ -159,23 +161,21 @@ import { siteConfig } from "../config";
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    const h1 = document.getElementById("name-toggle");
     const nameEl = document.getElementById("name-text");
-
-    const original = (nameEl.textContent || nameEl.innerText).trim(); // "David Glover"
+    const original = "David Glover";
     const alt = "a i lover";
     let toggled = false;
 
-    h1.addEventListener("click", () => {
-      // fade out, swap text, fade in — keeps spacing perfect since it's one text node
+    document.getElementById("name-toggle").addEventListener("click", () => {
       nameEl.classList.add("fading");
+
       const doSwap = () => {
         nameEl.textContent = toggled ? original : alt;
         nameEl.classList.remove("fading");
         nameEl.removeEventListener("transitionend", doSwap);
         toggled = !toggled;
       };
-      // if the browser skips transitionend (e.g., reduced motion), fallback quickly
+
       nameEl.addEventListener("transitionend", doSwap);
       setTimeout(() => {
         if (nameEl.classList.contains("fading")) doSwap();
@@ -183,6 +183,9 @@ import { siteConfig } from "../config";
     });
   });
 </script>
+
+
+
       <p
         class="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-gray-600 animate-fade-in animation-delay-400"
       >
