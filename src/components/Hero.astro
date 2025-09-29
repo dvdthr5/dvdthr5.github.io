@@ -146,15 +146,15 @@ import { siteConfig } from "../config";
   I'm <span>David Glover</span>
 </h1>
       <script>
-        function toggleName() {
-          const hidden = document.getElementById("hidden-part");
-          if (hidden.style.display == "none") {
-            hidden.style.display = "incline";
-          } else {
-            hidden.style.display = "none";
-          }
-        }
-      </script>
+  function toggleName() {
+    const el = document.getElementById("name-toggle");
+    if (el.textContent.includes("David Glover")) {
+      el.textContent = "AI Lover";
+    } else {
+      el.textContent = "David Glover";
+    }
+  }
+</script>
       <p
         class="mt-4 sm:mt-6 md:mt-8 text-pretty text-base sm:text-lg md:text-xl/8 font-medium text-gray-600 animate-fade-in animation-delay-400"
       >
