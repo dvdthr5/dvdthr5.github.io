@@ -140,19 +140,54 @@ import { siteConfig } from "../config";
       <h1
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
   style={{ color: siteConfig.accentColor }}
-
 >
-  I'm <span id ="name-toggle">David Glover</span>
+  I'm 
+  <span id="name-toggle">
+    <span class="letter" data-alt="A">D</span>
+    <span class="letter" data-alt="I">a</span>
+    <span class="letter" data-alt="">v</span>
+    <span class="letter" data-alt="">i</span>
+    <span class="letter" data-alt="">d</span>
+    &nbsp;
+    <span class="letter" data-alt="L">G</span>
+    <span class="letter" data-alt="o">l</span>
+    <span class="letter" data-alt="v">o</span>
+    <span class="letter" data-alt="e">v</span>
+    <span class="letter" data-alt="r">e</span>
+    <span class="letter" data-alt="">r</span>
+  </span>
 </h1>
-     <script>
+
+<style>
+  .letter {
+    transition: color 0.3s ease, opacity 0.3s ease;
+  }
+  .alt {
+    color: #e11d48; /* a flashy pink/red for "AI Lover" */
+  }
+</style>
+
+<script>
   document.addEventListener("DOMContentLoaded", () => {
-    const el = document.getElementById("name-toggle");
-    el.addEventListener("click", () => {
-      if (el.textContent.trim() === "David Glover") {
-        el.textContent = " a i  lover";
-      } else {
-        el.textContent = "David Glover";
-      }
+    const letters = document.querySelectorAll("#name-toggle .letter");
+    let toggled = false;
+
+    document.getElementById("name-toggle").addEventListener("click", () => {
+      toggled = !toggled;
+      letters.forEach(letter => {
+        if (toggled && letter.dataset.alt) {
+          letter.textContent = letter.dataset.alt;
+          letter.classList.add("alt");
+        } else {
+          letter.textContent = letter.textContent = letter.getAttribute("data-original") || letter.textContent;
+          letter.classList.remove("alt");
+        }
+      });
+    });
+
+    // Save original letters so we can revert later
+    letters.forEach(letter => {
+      letter.setAttribute("data-original", letter.textContent);
     });
   });
 </script>
