@@ -140,31 +140,33 @@ import { siteConfig } from "../config";
 
 
 
-      <h1
-  id="name-toggle"
+     <h1
   class="mt-6 sm:mt-8 md:mt-10 text-pretty text-4xl sm:text-5xl md:text-6xl lg:text-8xl font-bold tracking-tight text-gray-800 animate-fade-in animation-delay-200 cursor-pointer"
 >
   I'm 
   <span id="name-text">
-    D<span class="hover-red">a</span>v<span class="hover-red">i</span>d 
-    G<span class="hover-red">l</span><span class="hover-red">o</span><span class="hover-red">v</span><span class="hover-red">e</span><span class="hover-red">r</span>
+    <span class="hover-black">D</span><span class="hover-red">a</span><span class="hover-black">v</span><span class="hover-red">i</span><span class="hover-black">d</span> 
+    <span class="hover-black">G</span><span class="hover-red">l</span><span class="hover-red">o</span><span class="hover-red">v</span><span class="hover-red">e</span><span class="hover-red">r</span>
   </span>
 </h1>
 
 <style>
   #name-text {
-  color: blue; /* starting color */
-  transition: color 0.3s ease;
-}
+    color: blue; /* default color */
+  }
 
-#name-text .hover-red {
-  transition: color 0.3s ease;
-}
+  #name-text span {
+    transition: color 0.3s ease;
+  }
 
-#name-text:hover .hover-red {
-  color: red;
-}
+  /* hover effects */
+  #name-text:hover .hover-red {
+    color: red;
+  }
 
+  #name-text:hover .hover-black {
+    color: black;
+  }
 </style>
 
 
