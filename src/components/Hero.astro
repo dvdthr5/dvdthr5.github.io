@@ -311,6 +311,9 @@ height: 100%;
       )
     }
   </div>
+
+
+
   <script>
 document.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("throw-dvd-btn");
@@ -327,15 +330,15 @@ document.addEventListener("DOMContentLoaded", () => {
     dvdY.className = "dvd-y";
     dvd.className  = "dvd spin";
 
-    const durationSec = 3; // keep fixed or randomize if you like
+    const durationSec = 3.5; // a bit longer for readability
     const durationMs  = durationSec * 1000;
 
-    // Disc size (you can randomize if wanted)
+    // Disc size
     const size = 100;
     dvd.style.width  = `${size}px`;
     dvd.style.height = `${size}px`;
 
-    // Get element positions
+    // Get bounding boxes
     const heroRect  = hero.getBoundingClientRect();
     const mottoRect = motto.getBoundingClientRect();
     const nameRect  = nameEl.getBoundingClientRect();
@@ -343,28 +346,35 @@ document.addEventListener("DOMContentLoaded", () => {
     // Horizontal distance (X axis)
     const xEnd = heroRect.width - size;
     dvdX.style.setProperty("--xEnd", `${xEnd}px`);
-    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
+    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`); // not used anymore, but safe to keep
     dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
-    // Vertical positions (Y axis)
-    const mottoCenterY = (mottoRect.top - heroRect.top) + (mottoRect.height / 2) - (size / 2);
-    const nameCenterY  = (nameRect.top - heroRect.top) + (nameRect.height / 2) - (size / 2);
-    const exitY        = heroRect.height + size; // fully off bottom
+    // Vertical positions (Y axis) – slightly ABOVE text
+    const mottoTopY = (mottoRect.top - heroRect.top) - size * 0.6; // sit above motto
+    const nameTopY  = (nameRect.top - heroRect.top) - size * 0.6;  // sit above name
+    const exitY     = heroRect.height + size; // off bottom
 
-    dvdX.style.top  = `${mottoCenterY}px`;
+    dvdX.style.top  = `${mottoTopY}px`;
+
+    // Where should drops happen? → after right edges of the text
+    const mottoRight = (mottoRect.right - heroRect.left) - size / 2;
+    const nameRight  = (nameRect.right  - heroRect.left) - size / 2;
+
+    const t_drop1 = Math.min(Math.max(mottoRight / xEnd, 0.05), 0.9);
+    const t_drop2 = Math.min(Math.max(nameRight  / xEnd, t_drop1 + 0.05), 0.98);
 
     // Build DOM
     dvdY.appendChild(dvd);
     dvdX.appendChild(dvdY);
     hero.appendChild(dvdX);
 
-    // Animate Y relative to measured text positions
+    // Animate Y relative to text positions
     const yAnim = dvdY.animate([
       { transform: "translateY(0px)", offset: 0 },
-      { transform: "translateY(0px)", offset: 0.50 }, // stay level until 50%
-      { transform: `translateY(${nameCenterY - mottoCenterY}px)`, offset: 0.52 }, // drop onto name
-      { transform: `translateY(${nameCenterY - mottoCenterY}px)`, offset: 0.75 }, // hold until 75%
-      { transform: `translateY(${exitY - mottoCenterY}px)`, offset: 1 } // exit off bottom
+      { transform: "translateY(0px)", offset: t_drop1 },
+      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop1 + 0.02 },
+      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop2 },
+      { transform: `translateY(${exitY - mottoTopY}px)`, offset: 1 }
     ], {
       duration: durationMs,
       easing: "cubic-bezier(.25,.5,.2,1)",
@@ -376,6 +386,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
+
 
 
 </div>
