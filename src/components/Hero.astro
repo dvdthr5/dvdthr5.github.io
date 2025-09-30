@@ -362,11 +362,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameRightPx  = (nameRect.right  - heroRect.left);
 
     // Fractions of total X travel
-    const t_drop1 = Math.min(Math.max(mottoRightPx / xEnd + 0.02, 0.05), 0.95);
-    const t_drop2 = Math.min(
-      Math.max(nameRightPx / xEnd + 0.02, t_drop1 + 0.10),
-      0.98
-    );
+   // Fractions of total X travel based on element edges, not screen width
+const t_drop1 = Math.min(Math.max((mottoRightPx - size/2) / xEnd + 0.02, 0.05), 0.95);
+const t_drop2 = Math.min(
+  Math.max((nameRightPx - size/2) / xEnd + 0.02, t_drop1 + 0.10),
+  0.98
+);
+
 
     // Vertical distances
     const dropToNameY = (nameTopY - size) - startTop;
