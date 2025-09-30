@@ -192,14 +192,14 @@ import { siteConfig } from "../config";
 }
 
 /* --- Animations --- */
-@keyframes moveX {
+:global(@keyframes moveX ){
   0%   { transform: translateX(0); }
   50%  { transform: translateX(50vw); }
   75%  { transform: translateX(75vw); }
   100% { transform: translateX(100vw); }
 }
 
-@keyframes moveY {
+:global(@keyframes moveY) {
   0%   { transform: translateY(0); }
   50%  { transform: translateY(0); }
   60%  { transform: translateY(10vh); }
@@ -207,7 +207,7 @@ import { siteConfig } from "../config";
   100% { transform: translateY(80vh); }
 }
 
-@keyframes spin {
+:global(@keyframes spin) {
   0%   { transform: rotate(0deg); }
   100% { transform: rotate(1800deg); }
 }
@@ -345,7 +345,7 @@ import { siteConfig } from "../config";
   dvd.style.width  = `${size}px`;
   dvd.style.height = `${size}px`;
 
-  const baseline = 350;
+  const baseline = 370;
   dvdX.style.top = `${baseline - size}px`;
 
   if (Math.random() > 0.5) {
