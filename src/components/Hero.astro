@@ -322,12 +322,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // Random animation duration
       const duration = 3 + Math.random() * 3; // 3–6s
-
-      dvd.style.animation = `
-        fall ${duration}s linear forwards,
-        drift ${duration}s ease-in-out forwards,
-        spin ${duration}s linear infinite
-      `;
+      dvd.style.animation = `fallDriftSpin ${duration}s linear forwards`;
 
       hero.appendChild(dvd);
 
@@ -337,6 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
