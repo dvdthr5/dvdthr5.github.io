@@ -174,8 +174,7 @@ import { siteConfig } from "../config";
 /* Position the whole rig */
 :global(.dvd-x) {
   position: absolute;
-  top: 250px;
-  left: -140px;
+  left: 0;
   z-index: 30;
   pointer-events: none;
   will-change: transform;
@@ -188,8 +187,6 @@ import { siteConfig } from "../config";
 
 /* The image itself */
 :global(.dvd) {
-  width: 120px;
-  height: 120px;
   background: url('/dvd.png') no-repeat center / contain;
   will-change: transform;
 }
@@ -344,9 +341,12 @@ import { siteConfig } from "../config";
   dvdY.style.animationDuration = duration;
   dvd.style.animationDuration  = duration;
 
-  const size = 80 + Math.random() * 80; // 80–160px
-  dvd.style.width  = size + "px";
-  dvd.style.height = size + "px";
+  const size = 80 + Math.random() * 60; // 80–160px
+  dvd.style.width  = `${size}px`;
+  dvd.style.height = `${size}px`;
+  
+  const baseline = 250;
+  dvdX.style.top = `${baseline - size}`;
 
   if (Math.random() > 0.5) {
     dvd.style.animationDirection = "reverse";
