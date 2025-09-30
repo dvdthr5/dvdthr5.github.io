@@ -337,47 +337,52 @@ document.addEventListener("DOMContentLoaded", () => {
     dvd.style.width  = `${size}px`;
     dvd.style.height = `${size}px`;
 
+    // Get bounding boxes
     const heroRect  = hero.getBoundingClientRect();
     const mottoRect = motto.getBoundingClientRect();
     const nameRect  = nameEl.getBoundingClientRect();
 
+    // Horizontal travel (CSS moveX still handles the left-to-right)
     const xEnd = Math.max(1, heroRect.width - size);
     dvdX.style.setProperty("--xEnd", `${xEnd}px`);
     dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
     dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
+    // Vertical anchors
     const mottoTopY = (mottoRect.top - heroRect.top);
     const nameTopY  = (nameRect.top - heroRect.top);
     const exitY     = heroRect.height + size;
 
+    // Start position: roll just above the motto
     const startTop = mottoTopY - size;
     dvdX.style.top = `${startTop}px`;
 
+    // Trigger points = when DVD’s center clears text edges
     const mottoRightPx = (mottoRect.right - heroRect.left);
     const nameRightPx  = (nameRect.right  - heroRect.left);
 
-    // Both dips shifted later by ~0.08 (8%)
-    const t_drop1 = Math.min(Math.max((mottoRightPx / xEnd) + 0.14, 0.18), 0.94);
+    // Fractions of total X travel
+    const t_drop1 = Math.min(Math.max(mottoRightPx / xEnd + 0.02, 0.05), 0.95);
     const t_drop2 = Math.min(
-      Math.max(
-        Math.max((nameRightPx / xEnd) + 0.18, t_drop1 + 0.16),
-        0.20
-      ),
-      0.985
+      Math.max(nameRightPx / xEnd + 0.02, t_drop1 + 0.10),
+      0.98
     );
 
+    // Vertical distances
     const dropToNameY = (nameTopY - size + 10) - startTop;
 
+    // Build DOM
     dvdY.appendChild(dvd);
     dvdX.appendChild(dvdY);
     hero.appendChild(dvdX);
 
+    // Animate Y tied directly to text positions
     const yAnim = dvdY.animate([
-      { transform: "translateY(0px)", offset: 0 },
-      { transform: "translateY(0px)", offset: t_drop1 },
-      { transform: `translateY(${dropToNameY}px)`, offset: t_drop1 + 0.02 },
-      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 },
-      { transform: `translateY(${exitY - startTop}px)`, offset: 1 }
+      { transform: "translateY(0px)", offset: 0 },                    // roll across motto
+      { transform: "translateY(0px)", offset: t_drop1 },              // stay level until motto ends
+      { transform: `translateY(${dropToNameY}px)`, offset: t_drop1 + 0.02 }, // dip to name
+      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 }, // stay level until name ends
+      { transform: `translateY(${exitY - startTop}px)`, offset: 1 }   // fall off bottom
     ], {
       duration: durationMs,
       easing: "cubic-bezier(.25,.5,.2,1)",
