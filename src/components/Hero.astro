@@ -330,7 +330,7 @@ document.addEventListener("DOMContentLoaded", () => {
     dvdY.className = "dvd-y";
     dvd.className  = "dvd spin";
 
-    const durationSec = 3.5;
+    const durationSec = 3.8; // a touch longer to match later dips
     const durationMs  = durationSec * 1000;
 
     // Disc size
@@ -346,22 +346,21 @@ document.addEventListener("DOMContentLoaded", () => {
     // Horizontal travel
     const xEnd = heroRect.width - size;
     dvdX.style.setProperty("--xEnd", `${xEnd}px`);
-    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
-    dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
-    // Vertical positions – higher above the text
-    const mottoTopY = (mottoRect.top - heroRect.top) - size * 0.9; // higher above motto
-    const nameTopY  = (nameRect.top - heroRect.top) - size * 0.6;  // sit above name
+    // Vertical positions – tuned
+    const mottoTopY = (mottoRect.top - heroRect.top) - size * 0.9;
+    const nameTopY  = (nameRect.top - heroRect.top) - size * 0.6;
     const exitY     = heroRect.height + size;
 
     dvdX.style.top = `${mottoTopY}px`;
 
-    // Drop triggers after right edges
+    // Drop trigger positions (a bit later than before)
     const mottoRight = (mottoRect.right - heroRect.left) - size / 2;
     const nameRight  = (nameRect.right  - heroRect.left) - size / 2;
 
-    const t_drop1 = Math.min(Math.max(mottoRight / xEnd, 0.05), 0.85);
-    const t_drop2 = Math.min(Math.max(nameRight  / xEnd, t_drop1 + 0.1), 0.98);
+    // Push dips later (add extra 10–15% lag)
+    const t_drop1 = Math.min(Math.max(mottoRight / xEnd + 0.1, 0.15), 0.9);
+    const t_drop2 = Math.min(Math.max(nameRight  / xEnd + 0.12, t_drop1 + 0.1), 0.98);
 
     // Build DOM
     dvdY.appendChild(dvd);
@@ -371,10 +370,10 @@ document.addEventListener("DOMContentLoaded", () => {
     // Animate Y
     const yAnim = dvdY.animate([
       { transform: "translateY(0px)", offset: 0 },
-      { transform: "translateY(0px)", offset: t_drop1 }, 
-      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop1 + 0.02 }, // dip onto name
-      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop2 },        // hold across name
-      { transform: `translateY(${exitY - mottoTopY}px)`, offset: 1 }                  // fall off at very end
+      { transform: "translateY(0px)", offset: t_drop1 },
+      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop1 + 0.02 },
+      { transform: `translateY(${nameTopY - mottoTopY}px)`, offset: t_drop2 },
+      { transform: `translateY(${exitY - mottoTopY}px)`, offset: 1 }
     ], {
       duration: durationMs,
       easing: "cubic-bezier(.25,.5,.2,1)",
@@ -385,6 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
