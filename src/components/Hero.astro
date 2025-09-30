@@ -330,10 +330,10 @@ document.addEventListener("DOMContentLoaded", () => {
     dvdY.className = "dvd-y";
     dvd.className  = "dvd spin";
 
-    const durationSec = 3; // fixed for now
+    const durationSec = 3; // unchanged
     const durationMs  = durationSec * 1000;
 
-    const size = 100; // fixed for now
+    const size = 100; // unchanged (locking animation first)
     dvd.style.width  = `${size}px`;
     dvd.style.height = `${size}px`;
 
@@ -342,24 +342,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const mottoRect = motto.getBoundingClientRect();
     const nameRect  = nameEl.getBoundingClientRect();
 
-    // X distance
+    // X distance (unchanged)
     const xEnd = heroRect.width - size;
     dvdX.style.setProperty("--xEnd", `${xEnd}px`);
     dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
     dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
-    // --- Vertical anchors (bottom edge aligned) ---
+    // Vertical anchors (bottom edge aligned) — unchanged start height
     const mottoTopY = (mottoRect.top - heroRect.top);
     const nameTopY  = (nameRect.top - heroRect.top);
     const exitY     = heroRect.height + size;
 
-    // Start: above motto
+    // Start: above motto (unchanged)
     const startTop = mottoTopY - size;
     dvdX.style.top = `${startTop}px`;
 
-    // Drops at 50% (after motto) and 75% (after name)
-    const t_drop1 = 0.50;
-    const t_drop2 = 0.75;
+    // ---- CHANGES YOU ASKED FOR ----
+    // 1) Drops should occur after the END of each text, not halfway
+    const mottoRightPx = (mottoRect.right - heroRect.left);
+    const nameRightPx  = (nameRect.right  - heroRect.left);
+
+    // small positive gap so it dips a little AFTER the text ends
+    const afterGap = 10; // px
+    const t_drop1 = Math.min(Math.max((mottoRightPx + afterGap) / xEnd, 0.10), 0.92);
+    const t_drop2 = Math.min(Math.max((nameRightPx  + afterGap) / xEnd, t_drop1 + 0.06), 0.98);
+
+    // 2) First drop needs to go farther down (slightly lower than before)
+    const dipExtra = 10; // px extra depth onto the name line
+    const dropToNameY = (nameTopY - size + dipExtra) - startTop;
+    // ---- END CHANGES ----
 
     // Build DOM
     dvdY.appendChild(dvd);
@@ -368,11 +379,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Animate Y (relative to startTop)
     const yAnim = dvdY.animate([
-      { transform: "translateY(0px)", offset: 0 },                // on motto
-      { transform: "translateY(0px)", offset: t_drop1 },          // stay on motto
-      { transform: `translateY(${(nameTopY - size) - startTop}px)`, offset: t_drop1 + 0.02 }, // dip to name
-      { transform: `translateY(${(nameTopY - size) - startTop}px)`, offset: t_drop2 },        // roll on name
-      { transform: `translateY(${exitY - startTop}px)`, offset: 1 } // fall off bottom
+      { transform: "translateY(0px)", offset: 0 },                 // roll across motto
+      { transform: "translateY(0px)", offset: t_drop1 },           // hold until AFTER motto ends
+      { transform: `translateY(${dropToNameY}px)`, offset: t_drop1 + 0.02 }, // dip onto name (deeper)
+      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 },        // roll across name until AFTER it ends
+      { transform: `translateY(${exitY - startTop}px)`, offset: 1 }          // fall off bottom
     ], {
       duration: durationMs,
       easing: "cubic-bezier(.25,.5,.2,1)",
@@ -383,6 +394,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
