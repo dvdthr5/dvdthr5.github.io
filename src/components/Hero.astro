@@ -131,9 +131,11 @@ import { siteConfig } from "../config";
       stroke-width={0}></rect>
   </svg>
 
-   <button id="throw-dvd-btn" class="px-6 py-3 bg-blue-500 text-white rounded mb-4 ml-8 hover:bg-blue-600 transition-colors duration-200">
-  Throw a DVD
+   <button id="dvd-storm-btn"
+  class="px-6 py-3 bg-blue-500 text-white rounded mb-4 ml-8 hover:bg-blue-600 transition-colors duration-200">
+  DVD Storm
 </button>
+
 
 
 
@@ -170,43 +172,29 @@ import { siteConfig } from "../config";
   #name-text:hover .hover-black {
     color: black;
   }
-:global(.dvd-x) {
-  position: absolute;
-  left: 0; 
-top: 0;
-width: 100%; 
-height: 100%;
-  z-index: 30;
-  pointer-events: none;
-  will-change: transform;
-}
-
-:global(.dvd-y) {
-  will-change: transform;
-}
-
 :global(.dvd) {
   background: url('/dvd.png') no-repeat center / contain;
+  position: absolute;
+  top: -100px; /* start just above hero */
   will-change: transform;
+  z-index: 10;
 }
 
-:global(@keyframes moveX ){
-  0%   { transform: translateX(0); }
-  50%  { transform: translateX(var(--x50)); }
-  75%  { transform: translateX(var(--x75)); }
-  100% { transform: translateX(var(--xEnd)); }
+@keyframes fall {
+  to { transform: translateY(110vh); }
+}
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--drift)); }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(1440deg); }
 }
 
 
-:global(@keyframes spin) {
-  0%   { transform: rotate(0deg); }
-  100% { transform: rotate(1800deg); }
-}
-
-/* Apply animations – also global */
-:global(.anim-x) { animation: moveX 3s linear forwards; }
-:global(.anim-y) { animation: moveY 3s cubic-bezier(.25,.5,.2,1) forwards; }
-:global(.spin)   { animation: spin 3s linear forwards; }
 </style>
 
 
@@ -316,85 +304,46 @@ height: 100%;
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("throw-dvd-btn");
+  const button = document.getElementById("dvd-storm-btn");
   const hero   = document.getElementById("hero");
-  const motto  = document.getElementById("motto");
-  const nameEl = document.getElementById("name-text");
-
+  
   button.addEventListener("click", () => {
-    const dvdX = document.createElement("div");
-    const dvdY = document.createElement("div");
-    const dvd  = document.createElement("div");
+    for (let i = 0; i < 15; i++) {
+      const dvd = document.createElement("div");
+      dvd.className = "dvd";
 
-    dvdX.className = "dvd-x anim-x";
-    dvdY.className = "dvd-y";
-    dvd.className  = "dvd spin";
+      // Random size
+      const size = 60 + Math.random() * 60;
+      dvd.style.width  = `${size}px`;
+      dvd.style.height = `${size}px`;
 
-    const durationSec = 3;
-    const durationMs  = durationSec * 1000;
+      // Random X start
+      const heroRect = hero.getBoundingClientRect();
+      const startX = Math.random() * (heroRect.width - size);
+      dvd.style.left = `${startX}px`;
 
-    const size = 100;
-    dvd.style.width  = `${size}px`;
-    dvd.style.height = `${size}px`;
+      // Random drift (sideways sway)
+      const drift = (Math.random() - 0.5) * 200; // -100px to +100px
+      dvd.style.setProperty("--drift", `${drift}px`);
 
-    // Get bounding boxes
-    const heroRect  = hero.getBoundingClientRect();
-    const mottoRect = motto.getBoundingClientRect();
-    const nameRect  = nameEl.getBoundingClientRect();
+      // Random animation duration
+      const duration = 3 + Math.random() * 3; // 3–6s
 
-    // Horizontal travel
-    const xEnd = Math.max(1, heroRect.width - size);
-    dvdX.style.setProperty("--xEnd", `${xEnd}px`);
-    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
-    dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
+      dvd.style.animation = `
+        fall ${duration}s linear forwards,
+        drift ${duration}s ease-in-out forwards,
+        spin ${duration}s linear infinite
+      `;
 
-    // Vertical anchors
-    const mottoTopY = (mottoRect.top - heroRect.top);
-    const nameTopY  = (nameRect.top - heroRect.top);
-    const exitY     = heroRect.height + size;
+      hero.appendChild(dvd);
 
-    // Start position: bottom of DVD sits just above motto
-    const startTop = mottoTopY - size;
-    dvdX.style.top = `${startTop}px`;
-
-    // Trigger points = when DVD’s right edge clears text edges
-    const mottoRightPx = (mottoRect.right - heroRect.left);
-    const nameRightPx  = (nameRect.right  - heroRect.left);
-
-    // Fractions of total X travel
-   // Fractions of total X travel based on element edges, not screen width
-const t_drop1 = Math.min(Math.max((mottoRightPx - size/2) / xEnd + 0.02, 0.05), 0.95);
-const t_drop2 = Math.min(
-  Math.max((nameRightPx - size/2) / xEnd + 0.02, t_drop1 + 0.10),
-  0.98
-);
-
-
-    // Vertical distances
-    const dropToNameY = (nameTopY - size) - startTop;
-
-    // Build DOM
-    dvdY.appendChild(dvd);
-    dvdX.appendChild(dvdY);
-    hero.appendChild(dvdX);
-
-    // Animate Y tied directly to text positions
-    const yAnim = dvdY.animate([
-      { transform: "translateY(0px)", offset: 0 },                    // roll across motto
-      { transform: "translateY(0px)", offset: t_drop1 },              // hold until motto ends
-      { transform: `translateY(${dropToNameY}px)`, offset: t_drop1 + 0.02 }, // dip to name
-      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 }, // hold until name ends
-      { transform: `translateY(${exitY - startTop}px)`, offset: 1 }   // fall off bottom
-    ], {
-      duration: durationMs,
-      easing: "cubic-bezier(.25,.5,.2,1)",
-      fill: "forwards"
-    });
-
-    yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
+      // Clean up after falling
+      setTimeout(() => dvd.remove(), duration * 1000);
+    }
   });
 });
 </script>
+
 
 
 
