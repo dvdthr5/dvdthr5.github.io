@@ -174,23 +174,23 @@ import { siteConfig } from "../config";
     color: black;
   }
   /* Position the whole rig */
-#dvd-x {
+/* Position the whole rig */
+.dvd-x {
   position: absolute;
-  top: 250px;       /* adjust to line up with your text */
-  left: -140px;     /* start just off the left edge */
-  display: none;    /* shown on click */
+  top: 250px;
+  left: -140px;
   z-index: 30;
-  pointer-events: none;  /* don't block clicks */
+  pointer-events: none;
   will-change: transform;
 }
 
 /* Y axis container */
-#dvd-y {
+.dvd-y {
   will-change: transform;
 }
 
-/* The image itself (handles rotation) */
-#dvd {
+/* The image itself */
+.dvd {
   width: 120px;
   height: 120px;
   background: url('/dvd.png') no-repeat center / contain;
@@ -198,33 +198,29 @@ import { siteConfig } from "../config";
 }
 
 /* --- Animations --- */
-
-/* X: roll across the screen */
 @keyframes moveX {
   0%   { transform: translateX(0); }
-  50%  { transform: translateX(50vw); }  /* halfway */
-  75%  { transform: translateX(75vw); }  /* keep going flat */
-  100% { transform: translateX(100vw); } /* exit right edge of hero */
+  50%  { transform: translateX(50vw); }
+  75%  { transform: translateX(75vw); }
+  100% { transform: translateX(100vw); }
 }
 
-/* Y: dip 10vh, hold, then fall off the screen */
 @keyframes moveY {
   0%   { transform: translateY(0); }
-  50%  { transform: translateY(0); }      /* flat until halfway */
+  50%  { transform: translateY(0); }
   60%  { transform: translateY(10vh); }   
   70%  { transform: translateY(10vh); }   
   100% { transform: translateY(80vh); }  
 }
 
-
 @keyframes spin {
   0%   { transform: rotate(0deg); }
-  100% { transform: rotate(1800deg); } 
+  100% { transform: rotate(1800deg); }
 }
 
 /* Classes applied on click */
 .anim-x { animation: moveX 3s linear forwards; }
-.anim-y { animation: moveY 3s cubic-bezier(.25,.5,.2,1) forwards; } 
+.anim-y { animation: moveY 3s cubic-bezier(.25,.5,.2,1) forwards; }
 .spin   { animation: spin 3s linear forwards; }
 </style>
 
@@ -331,34 +327,32 @@ import { siteConfig } from "../config";
     }
   </div>
    <script>
+
   document.addEventListener("DOMContentLoaded", () => {
-    const dvdX = document.getElementById("dvd-x");
-    const dvdY = document.getElementById("dvd-y");
-    const dvd  = document.getElementById("dvd");
     const button = document.getElementById("throw-dvd-btn");
+    const hero = document.getElementById("hero");
 
     button.addEventListener("click", () => {
-      // show the rig
-      dvdX.style.display = "block";
+      // create a new rig each click
+      const dvdX = document.createElement("div");
+      const dvdY = document.createElement("div");
+      const dvd  = document.createElement("div");
 
-      // reset classes so we can retrigger the animations
-      dvdX.classList.remove("anim-x");
-      dvdY.classList.remove("anim-y");
-      dvd.classList.remove("spin");
-      // reflow to restart
-      void dvdX.offsetWidth;
+      dvdX.className = "dvd-x anim-x";  // x-axis
+      dvdY.className = "dvd-y anim-y";  // y-axis
+      dvd.className  = "dvd spin";      // the actual dvd
 
-      // go!
-      dvdX.classList.add("anim-x");
-      dvdY.classList.add("anim-y");
-      dvd.classList.add("spin");
+      dvdY.appendChild(dvd);
+      dvdX.appendChild(dvdY);
+      hero.appendChild(dvdX);
 
-      // hide once Y-fall completes
+      // cleanup after animation finishes
       dvdY.addEventListener("animationend", () => {
-        dvdX.style.display = "none";
+        dvdX.remove();
       }, { once: true });
     });
   });
+
 </script>
 </div>
 
