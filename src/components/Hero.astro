@@ -342,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mottoRect = motto.getBoundingClientRect();
     const nameRect  = nameEl.getBoundingClientRect();
 
-    // Horizontal travel (CSS moveX still handles the left-to-right)
+    // Horizontal travel
     const xEnd = Math.max(1, heroRect.width - size);
     dvdX.style.setProperty("--xEnd", `${xEnd}px`);
     dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
@@ -353,11 +353,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const nameTopY  = (nameRect.top - heroRect.top);
     const exitY     = heroRect.height + size;
 
-    // Start position: roll just above the motto
-    const startTop = mottoTopY - dvd.offsetHeight;
+    // Start position: bottom of DVD sits just above motto
+    const startTop = mottoTopY - size;
     dvdX.style.top = `${startTop}px`;
 
-    // Trigger points = when DVD’s center clears text edges
+    // Trigger points = when DVD’s right edge clears text edges
     const mottoRightPx = (mottoRect.right - heroRect.left);
     const nameRightPx  = (nameRect.right  - heroRect.left);
 
@@ -379,9 +379,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Animate Y tied directly to text positions
     const yAnim = dvdY.animate([
       { transform: "translateY(0px)", offset: 0 },                    // roll across motto
-      { transform: "translateY(0px)", offset: t_drop1 },              // stay level until motto ends
+      { transform: "translateY(0px)", offset: t_drop1 },              // hold until motto ends
       { transform: `translateY(${dropToNameY}px)`, offset: t_drop1 + 0.02 }, // dip to name
-      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 }, // stay level until name ends
+      { transform: `translateY(${dropToNameY}px)`, offset: t_drop2 }, // hold until name ends
       { transform: `translateY(${exitY - startTop}px)`, offset: 1 }   // fall off bottom
     ], {
       duration: durationMs,
@@ -393,6 +393,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 </script>
+
 
 
 
