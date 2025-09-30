@@ -354,7 +354,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const exitY     = heroRect.height + size;
 
     // Start position: roll just above the motto
-    const startTop = mottoTopY - size;
+    const startTop = mottoTopY - dvd.offsetHeight;
     dvdX.style.top = `${startTop}px`;
 
     // Trigger points = when DVD’s center clears text edges
@@ -369,7 +369,7 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
     // Vertical distances
-    const dropToNameY = (nameTopY - size + 10) - startTop;
+    const dropToNameY = (nameTopY - size) - startTop;
 
     // Build DOM
     dvdY.appendChild(dvd);
