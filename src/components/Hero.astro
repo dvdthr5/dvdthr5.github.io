@@ -140,6 +140,7 @@ import { siteConfig } from "../config";
   <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
     <div>
       <h2
+	id = "motto"
         class="text-pretty text-lg sm:text-xl md:text-2xl font-bold tracking-tight text-gray-700 animate-fade-in"
       >
         Spinning up new ideas, one disk at a time.
@@ -171,8 +172,10 @@ import { siteConfig } from "../config";
   }
 :global(.dvd-x) {
   position: absolute;
-  left: 0; top: 0;
-width: 100%; height: 100%;
+  left: 0; \
+top: 0;
+width: 100%; 
+height: 100%;
   z-index: 30;
   pointer-events: none;
   will-change: transform;
@@ -189,9 +192,9 @@ width: 100%; height: 100%;
 
 :global(@keyframes moveX ){
   0%   { transform: translateX(0); }
-  50%  { transform: translateX(50%); }
-  75%  { transform: translateX(75%); }
-  100% { transform: translateX(100%); }
+  50%  { transform: translateX(var(--x50)); }
+  75%  { transform: translateX(var(--x75)); }
+  100% { transform: translateX(var(--xEnd)); }
 }
 
 :global(@keyframes moveY) {
@@ -315,48 +318,97 @@ width: 100%; height: 100%;
       )
     }
   </div>
-   <script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const button = document.getElementById("throw-dvd-btn");
+  const hero   = document.getElementById("hero");
+  const motto  = document.getElementById("motto");
+  const nameEl = document.getElementById("name-text");
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const button = document.getElementById("throw-dvd-btn");
-    const hero = document.getElementById("hero");
+  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
-    button.addEventListener("click", () => {
-  const dvdX = document.createElement("div");
-  const dvdY = document.createElement("div");
-  const dvd  = document.createElement("div");
+  button.addEventListener("click", () => {
+    const dvdX = document.createElement("div");
+    const dvdY = document.createElement("div");
+    const dvd  = document.createElement("div");
 
-  dvdX.className = "dvd-x anim-x";
-  dvdY.className = "dvd-y anim-y";
-  dvd.className  = "dvd spin";
+    // classes: keep spin + anim-x; we will NOT use anim-y anymore
+    dvdX.className = "dvd-x anim-x";
+    dvdY.className = "dvd-y";
+    dvd.className  = "dvd spin";
 
-  // --- Variations ---
-  const duration = (2 + Math.random() * 2).toFixed(2) + "s"; // 2–4s
-  dvdX.style.animationDuration = duration;
-  dvdY.style.animationDuration = duration;
-  dvd.style.animationDuration  = duration;
+    // --- Randomization preserved ---
+    const durationSec = 2 + Math.random() * 2; // 2–4s
+    const durationStr = durationSec.toFixed(2) + "s";
+    const durationMs  = durationSec * 1000;
 
-  const size = 80 + Math.random() * 60; // 80–160px
-  dvd.style.width  = `${size}px`;
-  dvd.style.height = `${size}px`;
+    dvdX.style.animationDuration = durationStr; // moveX duration
+    dvd.style.animationDuration  = durationStr; // spin duration
 
-  const baseline = 370;
-  dvdX.style.top = `${baseline - size}px`;
+    const size = 80 + Math.random() * 60; // 80–160px
+    dvd.style.width  = `${size}px`;
+    dvd.style.height = `${size}px`;
 
-  if (Math.random() > 0.5) {
-    dvd.style.animationDirection = "reverse";
-  }
+    if (Math.random() > 0.5) {
+      dvd.style.animationDirection = "reverse"; // keep your spin flip
+    }
 
-  dvdY.appendChild(dvd);
-  dvdX.appendChild(dvdY);
-  hero.appendChild(dvdX);
+    // --- Measure stuff for device-consistent path ---
+    const heroRect  = hero.getBoundingClientRect();
+    const mottoRect = motto.getBoundingClientRect();
+    const nameRect  = nameEl.getBoundingClientRect();
 
-  dvdY.addEventListener("animationend", () => {
-    dvdX.remove();
-  }, { once: true });
-});
+    // Horizontal distance: from left edge to far right inside the hero, minus disc width
+    const xEnd = Math.max(0, heroRect.width - size);
+    // Precompute keyframe waypoints for X (used by CSS moveX)
+    dvdX.style.setProperty("--xEnd", `${xEnd}px`);
+    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
+    dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
+
+    // Start Y: align disc roughly centered on the motto line
+    const startTop = (mottoRect.top - heroRect.top) - (size * 0.5);
+    dvdX.style.top  = `${startTop}px`;
+    dvdX.style.left = `0px`;
+
+    // Drop 1 target: center on the name line
+    const nameCenterY = (nameRect.top - heroRect.top) - (size * 0.5);
+    const drop1 = nameCenterY - startTop; // px to translateY for first drop
+
+    // Final drop: go past the hero bottom so it exits
+    const drop2 = (heroRect.height - startTop) + size; // ensure off-screen bottom
+
+    // When should the drops happen? Sync with where the disc is horizontally:
+    // t = fraction of the X travel (0..1)
+    const centerOffset = size * 0.5; // use disc center for nicer feel
+    const nameStartX = (nameRect.left  - heroRect.left) - centerOffset;
+    const nameEndX   = (nameRect.right - heroRect.left) - centerOffset;
+
+    const t_drop1 = clamp(nameStartX / xEnd, 0.05, 0.90);
+    const t_drop2 = clamp(nameEndX   / xEnd, t_drop1 + 0.05, 0.98);
+
+    // --- Build the DOM and run animations ---
+    dvdY.appendChild(dvd);
+    dvdX.appendChild(dvdY);
+    hero.appendChild(dvdX);
+
+    // Drive the vertical motion precisely using WAAPI:
+    const yAnim = dvdY.animate([
+      { transform: "translateY(0px)",           offset: 0 },
+      { transform: "translateY(0px)",           offset: t_drop1 },
+      { transform: `translateY(${drop1}px)`,    offset: Math.min(t_drop1 + 0.02, t_drop2 - 0.02) },
+      { transform: `translateY(${drop1}px)`,    offset: t_drop2 },
+      { transform: `translateY(${drop2}px)`,    offset: 1 }
+    ], {
+      duration: durationMs,
+      easing: "cubic-bezier(.25,.5,.2,1)",
+      fill: "forwards"
+    });
+
+    // Clean up when the Y animation finishes (or if something interrupts)
+    yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
   });
-
+});
 </script>
+
 </div>
 
