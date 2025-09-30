@@ -169,42 +169,37 @@ import { siteConfig } from "../config";
   #name-text:hover .hover-black {
     color: black;
   }
-  /* Position the whole rig */
-/* Position the whole rig */
-/* Position the whole rig */
 :global(.dvd-x) {
   position: absolute;
-  left: 0;
+  left: 0; top: 0;
+width: 100%; height: 100%;
   z-index: 30;
   pointer-events: none;
   will-change: transform;
 }
 
-/* Y axis container */
 :global(.dvd-y) {
   will-change: transform;
 }
 
-/* The image itself */
 :global(.dvd) {
   background: url('/dvd.png') no-repeat center / contain;
   will-change: transform;
 }
 
-/* --- Animations --- */
 :global(@keyframes moveX ){
   0%   { transform: translateX(0); }
-  50%  { transform: translateX(50vw); }
-  75%  { transform: translateX(75vw); }
-  100% { transform: translateX(100vw); }
+  50%  { transform: translateX(50%); }
+  75%  { transform: translateX(75%); }
+  100% { transform: translateX(100%); }
 }
 
 :global(@keyframes moveY) {
   0%   { transform: translateY(0); }
   40%  { transform: translateY(0); }
-  50%  { transform: translateY(12vh); }
-  60%  { transform: translateY(12vh); }
-  100% { transform: translateY(80vh); }
+  50%  { transform: translateY(12%); }
+  60%  { transform: translateY(12%); }
+  100% { transform: translateY(80%); }
 }
 
 :global(@keyframes spin) {
