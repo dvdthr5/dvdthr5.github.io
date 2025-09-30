@@ -197,13 +197,6 @@ height: 100%;
   100% { transform: translateX(var(--xEnd)); }
 }
 
-:global(@keyframes moveY) {
-  0%   { transform: translateY(0); }
-  40%  { transform: translateY(0); }
-  50%  { transform: translateY(12%); }
-  60%  { transform: translateY(12%); }
-  100% { transform: translateY(80%); }
-}
 
 :global(@keyframes spin) {
   0%   { transform: rotate(0deg); }
@@ -325,65 +318,65 @@ document.addEventListener("DOMContentLoaded", () => {
   const motto  = document.getElementById("motto");
   const nameEl = document.getElementById("name-text");
 
-  function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
-
   button.addEventListener("click", () => {
-  const dvdX = document.createElement("div");
-  const dvdY = document.createElement("div");
-  const dvd  = document.createElement("div");
+    const dvdX = document.createElement("div");
+    const dvdY = document.createElement("div");
+    const dvd  = document.createElement("div");
 
-  dvdX.className = "dvd-x anim-x";
-  dvdY.className = "dvd-y";
-  dvd.className  = "dvd spin";
+    dvdX.className = "dvd-x anim-x";
+    dvdY.className = "dvd-y";
+    dvd.className  = "dvd spin";
 
-  const durationSec = 3; // keep fixed or randomize
-  const durationMs  = durationSec * 1000;
+    const durationSec = 3; // keep fixed or randomize if you like
+    const durationMs  = durationSec * 1000;
 
-  // Random size
-  const size = 100;
-  dvd.style.width  = `${size}px`;
-  dvd.style.height = `${size}px`;
+    // Disc size (you can randomize if wanted)
+    const size = 100;
+    dvd.style.width  = `${size}px`;
+    dvd.style.height = `${size}px`;
 
-  // Get positions
-  const heroRect  = hero.getBoundingClientRect();
-  const mottoRect = motto.getBoundingClientRect();
-  const nameRect  = nameEl.getBoundingClientRect();
+    // Get element positions
+    const heroRect  = hero.getBoundingClientRect();
+    const mottoRect = motto.getBoundingClientRect();
+    const nameRect  = nameEl.getBoundingClientRect();
 
-  // X end distance
-  const xEnd = heroRect.width - size;
-  dvdX.style.setProperty("--xEnd", `${xEnd}px`);
-  dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
-  dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
+    // Horizontal distance (X axis)
+    const xEnd = heroRect.width - size;
+    dvdX.style.setProperty("--xEnd", `${xEnd}px`);
+    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
+    dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
-  // Y positions
-  const startTop  = (mottoRect.top - heroRect.top) - size/2;
-  const dropToName = (nameRect.top - heroRect.top) - size/2;
-  const dropOff   = heroRect.height + size; // off bottom
+    // Vertical positions (Y axis)
+    const mottoCenterY = (mottoRect.top - heroRect.top) + (mottoRect.height / 2) - (size / 2);
+    const nameCenterY  = (nameRect.top - heroRect.top) + (nameRect.height / 2) - (size / 2);
+    const exitY        = heroRect.height + size; // fully off bottom
 
-  dvdX.style.top  = `${startTop}px`;
+    dvdX.style.top  = `${mottoCenterY}px`;
 
-  // Build DOM
-  dvdY.appendChild(dvd);
-  dvdX.appendChild(dvdY);
-  hero.appendChild(dvdX);
+    // Build DOM
+    dvdY.appendChild(dvd);
+    dvdX.appendChild(dvdY);
+    hero.appendChild(dvdX);
 
-  // Animate Y relative to text positions
-  const yAnim = dvdY.animate([
-    { transform: `translateY(0px)`, offset: 0 },
-    { transform: `translateY(0px)`, offset: 0.50 },
-    { transform: `translateY(${dropToName - startTop}px)`, offset: 0.52 },
-    { transform: `translateY(${dropToName - startTop}px)`, offset: 0.75 },
-    { transform: `translateY(${dropOff - startTop}px)`, offset: 1 }
-  ], {
-    duration: durationMs,
-    easing: "cubic-bezier(.25,.5,.2,1)",
-    fill: "forwards"
+    // Animate Y relative to measured text positions
+    const yAnim = dvdY.animate([
+      { transform: "translateY(0px)", offset: 0 },
+      { transform: "translateY(0px)", offset: 0.50 }, // stay level until 50%
+      { transform: `translateY(${nameCenterY - mottoCenterY}px)`, offset: 0.52 }, // drop onto name
+      { transform: `translateY(${nameCenterY - mottoCenterY}px)`, offset: 0.75 }, // hold until 75%
+      { transform: `translateY(${exitY - mottoCenterY}px)`, offset: 1 } // exit off bottom
+    ], {
+      duration: durationMs,
+      easing: "cubic-bezier(.25,.5,.2,1)",
+      fill: "forwards"
+    });
+
+    // Clean up
+    yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
   });
-
-  yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
-});
 });
 </script>
+
 
 </div>
 
