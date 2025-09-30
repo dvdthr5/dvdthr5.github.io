@@ -170,28 +170,32 @@ import { siteConfig } from "../config";
     color: black;
   }
   #dvd {
-    position: absolute;
-    top: 50px;
-    left: -200px;
-    width: 120px;
-    height: 120px;
-    background: url('/dvd.png') no-repeat center/contain;
-    display: none;
-    z-index: 20;
-  }
+  position: absolute;
+  top: 200px; /* <-- adjust this to line up with your text */
+  left: -200px;
+  width: 120px;
+  height: 120px;
+  background: url('/dvd.png') no-repeat center/contain;
+  display: none;
+  z-index: 30; /* higher so it overlaps text */
+}
 
-  @keyframes rollAcross {
-    0% {
-      transform: translateX(0) rotate(0deg);
-    }
-    100% {
-      transform: translateX(120vw) rotate(1440deg);
-    }
+@keyframes rollAcrossAndFall {
+  0% {
+    transform: translateX(0) rotate(0deg);
   }
+  70% {
+    transform: translateX(120vw) rotate(1440deg); /* roll across */
+  }
+  100% {
+    transform: translateX(120vw) translateY(300px) rotate(1800deg); /* fall off */
+    opacity: 0; /* optional fade */
+  }
+}
 
-  .animate-dvd {
-    animation: rollAcross 3s linear forwards;
-  }
+.animate-dvd {
+  animation: rollAcrossAndFall 4s ease-in forwards;
+}
 </style>
 
 
