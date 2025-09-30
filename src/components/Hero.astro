@@ -171,7 +171,8 @@ import { siteConfig } from "../config";
   }
   /* Position the whole rig */
 /* Position the whole rig */
-.dvd-x {
+/* Position the whole rig */
+:global(.dvd-x) {
   position: absolute;
   top: 250px;
   left: -140px;
@@ -181,12 +182,12 @@ import { siteConfig } from "../config";
 }
 
 /* Y axis container */
-.dvd-y {
+:global(.dvd-y) {
   will-change: transform;
 }
 
 /* The image itself */
-.dvd {
+:global(.dvd) {
   width: 120px;
   height: 120px;
   background: url('/dvd.png') no-repeat center / contain;
@@ -204,9 +205,9 @@ import { siteConfig } from "../config";
 @keyframes moveY {
   0%   { transform: translateY(0); }
   50%  { transform: translateY(0); }
-  60%  { transform: translateY(10vh); }   
-  70%  { transform: translateY(10vh); }   
-  100% { transform: translateY(80vh); }  
+  60%  { transform: translateY(10vh); }
+  70%  { transform: translateY(10vh); }
+  100% { transform: translateY(80vh); }
 }
 
 @keyframes spin {
@@ -214,10 +215,10 @@ import { siteConfig } from "../config";
   100% { transform: rotate(1800deg); }
 }
 
-/* Classes applied on click */
-.anim-x { animation: moveX 3s linear forwards; }
-.anim-y { animation: moveY 3s cubic-bezier(.25,.5,.2,1) forwards; }
-.spin   { animation: spin 3s linear forwards; }
+/* Apply animations – also global */
+:global(.anim-x) { animation: moveX 3s linear forwards; }
+:global(.anim-y) { animation: moveY 3s cubic-bezier(.25,.5,.2,1) forwards; }
+:global(.spin)   { animation: spin 3s linear forwards; }
 </style>
 
 
