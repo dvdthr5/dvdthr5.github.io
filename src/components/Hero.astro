@@ -330,25 +330,39 @@ import { siteConfig } from "../config";
     const hero = document.getElementById("hero");
 
     button.addEventListener("click", () => {
-      // create a new rig each click
-      const dvdX = document.createElement("div");
-      const dvdY = document.createElement("div");
-      const dvd  = document.createElement("div");
+  const dvdX = document.createElement("div");
+  const dvdY = document.createElement("div");
+  const dvd  = document.createElement("div");
 
-      dvdX.className = "dvd-x anim-x";  // x-axis
-      dvdY.className = "dvd-y anim-y";  // y-axis
-      dvd.className  = "dvd spin";      // the actual dvd
+  dvdX.className = "dvd-x anim-x";
+  dvdY.className = "dvd-y anim-y";
+  dvd.className  = "dvd spin";
 
-      dvdY.appendChild(dvd);
-      dvdX.appendChild(dvdY);
-      hero.appendChild(dvdX);
+  // --- Variations ---
+  const duration = (2 + Math.random() * 2).toFixed(2) + "s"; // 2–4s
+  dvdX.style.animationDuration = duration;
+  dvdY.style.animationDuration = duration;
+  dvd.style.animationDuration  = duration;
 
-      // cleanup after animation finishes
-      dvdY.addEventListener("animationend", () => {
-        dvdX.remove();
-      }, { once: true });
-    });
-  });
+  const size = 80 + Math.random() * 80; // 80–160px
+  dvd.style.width  = size + "px";
+  dvd.style.height = size + "px";
+
+  const offset = 200 + Math.random() * 100; // 200–300px
+  dvdX.style.top = offset + "px";
+
+  if (Math.random() > 0.5) {
+    dvd.style.animationDirection = "reverse";
+  }
+
+  dvdY.appendChild(dvd);
+  dvdX.appendChild(dvdY);
+  hero.appendChild(dvdX);
+
+  dvdY.addEventListener("animationend", () => {
+    dvdX.remove();
+  }, { once: true });
+});
 
 </script>
 </div>
