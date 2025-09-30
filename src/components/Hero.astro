@@ -135,7 +135,11 @@ import { siteConfig } from "../config";
   Throw a DVD
 </button>
 
-<div id="dvd"></div>
+<div id="dvd-x">
+  <div id="dvd-y">
+    <div id="dvd"></div>
+  </div>
+</div>
 
   <div class="h-full mx-auto p-8 sm:p-12 md:p-24 flex items-center">
     <div>
@@ -169,31 +173,59 @@ import { siteConfig } from "../config";
   #name-text:hover .hover-black {
     color: black;
   }
-  #dvd {
+  /* Position the whole rig */
+#dvd-x {
   position: absolute;
-  top: 250px; /* adjust for placement */
-  left: 0;
+  top: 250px;       /* adjust to line up with your text */
+  left: -140px;     /* start just off the left edge */
+  display: none;    /* shown on click */
+  z-index: 30;
+  pointer-events: none;  /* don't block clicks */
+  will-change: transform;
+}
+
+/* Y axis container */
+#dvd-y {
+  will-change: transform;
+}
+
+/* The image itself (handles rotation) */
+#dvd {
   width: 120px;
   height: 120px;
-  background: url('/dvd.png') no-repeat center/contain;
-  display: none;
-  z-index: 30;
-
-  /* Motion path setup */
-  offset-path: path("M 0 0 L 50vw 0 Q 65vw 10vh, 75vw 10vh T 100vw 100vh");
-  offset-distance: 0%;
-  offset-rotate: auto; /* follows the path */
+  background: url('/dvd.png') no-repeat center / contain;
+  will-change: transform;
 }
 
-@keyframes rollAlongPath {
-  0%   { offset-distance: 0%; }
-  100% { offset-distance: 100%; }
+/* --- Animations --- */
+
+/* X: roll across the screen */
+@keyframes moveX {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(50vw); }  /* halfway */
+  75%  { transform: translateX(75vw); }  /* keep going flat */
+  100% { transform: translateX(100vw); } /* exit right edge of hero */
 }
 
-.animate-dvd {
-  display: block;
-  animation: rollAlongPath 4s linear forwards;
+/* Y: dip 10vh, hold, then fall off the screen */
+@keyframes moveY {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(0); }      /* flat until halfway */
+  60%  { transform: translateY(10vh); }   
+  75%  { transform: translateY(10vh); }   
+  100% { transform: translateY(100vh); }  
 }
+
+
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(1800deg); } 
+}
+
+/* Classes applied on click */
+.anim-x { animation: moveX 4s linear forwards; }
+.anim-y { animation: moveY 4s cubic-bezier(.25,.5,.2,1) forwards; } 
+.spin   { animation: spin 4s linear forwards; }
 </style>
 
 
@@ -299,21 +331,34 @@ import { siteConfig } from "../config";
     }
   </div>
    <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const dvd = document.getElementById("dvd");
-      const button = document.getElementById("throw-dvd-btn");
+  document.addEventListener("DOMContentLoaded", () => {
+    const dvdX = document.getElementById("dvd-x");
+    const dvdY = document.getElementById("dvd-y");
+    const dvd  = document.getElementById("dvd");
+    const button = document.getElementById("throw-dvd-btn");
 
-      button.addEventListener("click", () => {
-        dvd.style.display = "block";
-        dvd.classList.remove("animate-dvd");
-        void dvd.offsetWidth; // restart animation
-        dvd.classList.add("animate-dvd");
+    button.addEventListener("click", () => {
+      // show the rig
+      dvdX.style.display = "block";
 
-        dvd.addEventListener("animationend", () => {
-          dvd.style.display = "none";
-        }, { once: true });
-      });
+      // reset classes so we can retrigger the animations
+      dvdX.classList.remove("anim-x");
+      dvdY.classList.remove("anim-y");
+      dvd.classList.remove("spin");
+      // reflow to restart
+      void dvdX.offsetWidth;
+
+      // go!
+      dvdX.classList.add("anim-x");
+      dvdY.classList.add("anim-y");
+      dvd.classList.add("spin");
+
+      // hide once Y-fall completes
+      dvdY.addEventListener("animationend", () => {
+        dvdX.style.display = "none";
+      }, { once: true });
     });
-  </script>
+  });
+</script>
 </div>
 
