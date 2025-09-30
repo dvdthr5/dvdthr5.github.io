@@ -182,14 +182,17 @@ import { siteConfig } from "../config";
 
 @keyframes rollAcrossAndFall {
   0% {
-    transform: translateX(0) rotate(0deg);
+    transform: translateX(0) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(60vw) translateY(100px) rotate(720deg);
   }
   70% {
-    transform: translateX(120vw) rotate(1440deg); /* roll across */
+    transform: translateX(90vw) translateY(200px) rotate(1440deg);
   }
   100% {
-    transform: translateX(120vw) translateY(300px) rotate(1800deg); /* fall off */
-    opacity: 0; /* optional fade */
+    transform: translateX(120vw) translateY(400px) rotate(1800deg);
+    opacity: 0;
   }
 }
 
