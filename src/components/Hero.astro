@@ -328,85 +328,60 @@ document.addEventListener("DOMContentLoaded", () => {
   function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
   button.addEventListener("click", () => {
-    const dvdX = document.createElement("div");
-    const dvdY = document.createElement("div");
-    const dvd  = document.createElement("div");
+  const dvdX = document.createElement("div");
+  const dvdY = document.createElement("div");
+  const dvd  = document.createElement("div");
 
-    // classes: keep spin + anim-x; we will NOT use anim-y anymore
-    dvdX.className = "dvd-x anim-x";
-    dvdY.className = "dvd-y";
-    dvd.className  = "dvd spin";
+  dvdX.className = "dvd-x anim-x";
+  dvdY.className = "dvd-y";
+  dvd.className  = "dvd spin";
 
-    // --- Randomization preserved ---
-    const durationSec = 2 + Math.random() * 2; // 2–4s
-    const durationStr = durationSec.toFixed(2) + "s";
-    const durationMs  = durationSec * 1000;
+  const durationSec = 3; // keep fixed or randomize
+  const durationMs  = durationSec * 1000;
 
-    dvdX.style.animationDuration = durationStr; // moveX duration
-    dvd.style.animationDuration  = durationStr; // spin duration
+  // Random size
+  const size = 100;
+  dvd.style.width  = `${size}px`;
+  dvd.style.height = `${size}px`;
 
-    const size = 80 + Math.random() * 60; // 80–160px
-    dvd.style.width  = `${size}px`;
-    dvd.style.height = `${size}px`;
+  // Get positions
+  const heroRect  = hero.getBoundingClientRect();
+  const mottoRect = motto.getBoundingClientRect();
+  const nameRect  = nameEl.getBoundingClientRect();
 
-    if (Math.random() > 0.5) {
-      dvd.style.animationDirection = "reverse"; // keep your spin flip
-    }
+  // X end distance
+  const xEnd = heroRect.width - size;
+  dvdX.style.setProperty("--xEnd", `${xEnd}px`);
+  dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
+  dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
 
-    // --- Measure stuff for device-consistent path ---
-    const heroRect  = hero.getBoundingClientRect();
-    const mottoRect = motto.getBoundingClientRect();
-    const nameRect  = nameEl.getBoundingClientRect();
+  // Y positions
+  const startTop  = (mottoRect.top - heroRect.top) - size/2;
+  const dropToName = (nameRect.top - heroRect.top) - size/2;
+  const dropOff   = heroRect.height + size; // off bottom
 
-    // Horizontal distance: from left edge to far right inside the hero, minus disc width
-    const xEnd = Math.max(0, heroRect.width - size);
-    // Precompute keyframe waypoints for X (used by CSS moveX)
-    dvdX.style.setProperty("--xEnd", `${xEnd}px`);
-    dvdX.style.setProperty("--x50", `${xEnd * 0.5}px`);
-    dvdX.style.setProperty("--x75", `${xEnd * 0.75}px`);
+  dvdX.style.top  = `${startTop}px`;
 
-    // Start Y: align disc roughly centered on the motto line
-    const startTop = (mottoRect.top - heroRect.top) - (size * 0.5);
-    dvdX.style.top  = `${startTop}px`;
-    dvdX.style.left = `0px`;
+  // Build DOM
+  dvdY.appendChild(dvd);
+  dvdX.appendChild(dvdY);
+  hero.appendChild(dvdX);
 
-    // Drop 1 target: center on the name line
-    const nameCenterY = (nameRect.top - heroRect.top) - (size * 0.5);
-    const drop1 = nameCenterY - startTop; // px to translateY for first drop
-
-    // Final drop: go past the hero bottom so it exits
-    const drop2 = (heroRect.height - startTop) + size; // ensure off-screen bottom
-
-    // When should the drops happen? Sync with where the disc is horizontally:
-    // t = fraction of the X travel (0..1)
-    const centerOffset = size * 0.5; // use disc center for nicer feel
-    const nameStartX = (nameRect.left  - heroRect.left) - centerOffset;
-    const nameEndX   = (nameRect.right - heroRect.left) - centerOffset;
-
-    const t_drop1 = clamp(nameStartX / xEnd, 0.05, 0.90);
-    const t_drop2 = clamp(nameEndX   / xEnd, t_drop1 + 0.05, 0.98);
-
-    // --- Build the DOM and run animations ---
-    dvdY.appendChild(dvd);
-    dvdX.appendChild(dvdY);
-    hero.appendChild(dvdX);
-
-    // Drive the vertical motion precisely using WAAPI:
-    const yAnim = dvdY.animate([
-      { transform: "translateY(0px)",           offset: 0 },
-      { transform: "translateY(0px)",           offset: t_drop1 },
-      { transform: `translateY(${drop1}px)`,    offset: Math.min(t_drop1 + 0.02, t_drop2 - 0.02) },
-      { transform: `translateY(${drop1}px)`,    offset: t_drop2 },
-      { transform: `translateY(${drop2}px)`,    offset: 1 }
-    ], {
-      duration: durationMs,
-      easing: "cubic-bezier(.25,.5,.2,1)",
-      fill: "forwards"
-    });
-
-    // Clean up when the Y animation finishes (or if something interrupts)
-    yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
+  // Animate Y relative to text positions
+  const yAnim = dvdY.animate([
+    { transform: `translateY(0px)`, offset: 0 },
+    { transform: `translateY(0px)`, offset: 0.50 },
+    { transform: `translateY(${dropToName - startTop}px)`, offset: 0.52 },
+    { transform: `translateY(${dropToName - startTop}px)`, offset: 0.75 },
+    { transform: `translateY(${dropOff - startTop}px)`, offset: 1 }
+  ], {
+    duration: durationMs,
+    easing: "cubic-bezier(.25,.5,.2,1)",
+    fill: "forwards"
   });
+
+  yAnim.finished.then(() => dvdX.remove()).catch(() => dvdX.remove());
+});
 });
 </script>
 
