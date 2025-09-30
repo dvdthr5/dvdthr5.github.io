@@ -182,28 +182,19 @@ import { siteConfig } from "../config";
 
 @keyframes rollAcrossAndBounce {
   0% {
-    transform: translateX(0) rotate(0deg);
+    transform: translateX(0) translateY(0) rotate(0deg);
   }
-  55% {
-    transform: translateX(100vw) translateY(0) rotate(1440deg);
+  50% {
+    transform: translateX(50vw) translateY(0) rotate(720deg);
   }
-  65% {
-    transform: translateX(100vw) translateY(100vh) rotate(1620deg); /* fall hard */
+  60% {
+    transform: translateX(60vw) translateY(30px) rotate(900deg); /* bump down */
   }
   70% {
-    transform: translateX(100vw) translateY(80vh) rotate(1680deg); /* bounce up */
-  }
-  75% {
-    transform: translateX(100vw) translateY(100vh) rotate(1740deg); /* fall */
-  }
-  79% {
-    transform: translateX(100vw) translateY(90vh) rotate(1770deg); /* smaller bounce */
-  }
-  84% {
-    transform: translateX(100vw) translateY(100vh) rotate(1790deg);
+    transform: translateX(70vw) translateY(30px) rotate(1080deg); /* hold level */
   }
   100% {
-    transform: translateX(100vw) translateY(100vh) rotate(1800deg); /* settle */
+    transform: translateX(100vw) translateY(100vh) rotate(1800deg); /* fall off screen */
   }
 }
 
