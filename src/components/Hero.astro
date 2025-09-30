@@ -180,20 +180,14 @@ import { siteConfig } from "../config";
   z-index: 10;
 }
 
-@keyframes fall {
-  to { transform: translateY(110vh); }
+@keyframes fallDriftSpin {
+  from {
+    transform: translate(0, -100px) rotate(0deg);
+  }
+  to {
+    transform: translate(var(--drift, 0px), 110vh) rotate(1440deg);
+  }
 }
-
-@keyframes drift {
-  from { transform: translateX(0); }
-  to   { transform: translateX(var(--drift)); }
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(1440deg); }
-}
-
 
 </style>
 
