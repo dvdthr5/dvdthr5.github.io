@@ -1,10 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="12" fill="#1d4ed8"/>
-  <text x="50%" y="50%" text-anchor="middle" dy=".35em"
-        font-family="Arial, Helvetica, sans-serif"
-        font-size="28"
-        font-weight="bold"
-        fill="white">
-    DG
-  </text>
+  <defs>
+    <radialGradient id="base" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#111"/>
+      <stop offset="70%" stop-color="#222"/>
+      <stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <linearGradient id="rainbow2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#ff0040"/>
+      <stop offset="25%" stop-color="#ffff00"/>
+      <stop offset="50%" stop-color="#00ff80"/>
+      <stop offset="75%" stop-color="#0080ff"/>
+      <stop offset="100%" stop-color="#ff00ff"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="32" cy="32" r="30" fill="url(#base)" stroke="#000" stroke-width="2"/>
+  <circle cx="32" cy="32" r="30" fill="url(#rainbow2)" fill-opacity="0.25"/>
+  
+  <circle cx="32" cy="32" r="10" fill="#111" stroke="#666" stroke-width="2"/>
+  <circle cx="32" cy="32" r="3" fill="#000"/>
 </svg>
