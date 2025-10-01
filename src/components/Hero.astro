@@ -300,38 +300,54 @@ import { siteConfig } from "../config";
 document.addEventListener("DOMContentLoaded", () => {
   const button = document.getElementById("dvd-storm-btn");
   const hero   = document.getElementById("hero");
-  
+
+  function spawnDVD() {
+    const dvd = document.createElement("div");
+    dvd.className = "dvd";
+
+    // Random size
+    const size = 50 + Math.random() * 70; // 50–120px
+    dvd.style.width  = `${size}px`;
+    dvd.style.height = `${size}px`;
+
+    // Random X start
+    const heroRect = hero.getBoundingClientRect();
+    const startX = Math.random() * (heroRect.width - size);
+    dvd.style.left = `${startX}px`;
+
+    // Random drift (sideways sway)
+    const drift = (Math.random() - 0.5) * 300; // -150px to +150px
+    dvd.style.setProperty("--drift", `${drift}px`);
+
+    // Random animation duration (fast vs slow fall)
+    const duration = 2 + Math.random() * 4; // 2–6s
+    dvd.style.animation = `fallDriftSpin ${duration}s linear forwards`;
+
+    hero.appendChild(dvd);
+
+    // Clean up after falling
+    setTimeout(() => dvd.remove(), duration * 1000);
+  }
+
   button.addEventListener("click", () => {
-    for (let i = 0; i < 15; i++) {
-      const dvd = document.createElement("div");
-      dvd.className = "dvd";
+    const stormDuration = 3000 + Math.random() * 2000; // 3–5 seconds
+    const stormEnd = Date.now() + stormDuration;
 
-      // Random size
-      const size = 60 + Math.random() * 60;
-      dvd.style.width  = `${size}px`;
-      dvd.style.height = `${size}px`;
+    function rainLoop() {
+      if (Date.now() < stormEnd) {
+        spawnDVD();
 
-      // Random X start
-      const heroRect = hero.getBoundingClientRect();
-      const startX = Math.random() * (heroRect.width - size);
-      dvd.style.left = `${startX}px`;
-
-      // Random drift (sideways sway)
-      const drift = (Math.random() - 0.5) * 200; // -100px to +100px
-      dvd.style.setProperty("--drift", `${drift}px`);
-
-      // Random animation duration
-      const duration = 3 + Math.random() * 3; // 3–6s
-      dvd.style.animation = `fallDriftSpin ${duration}s linear forwards`;
-
-      hero.appendChild(dvd);
-
-      // Clean up after falling
-      setTimeout(() => dvd.remove(), duration * 1000);
+        // Random delay before next DVD spawns (like natural rain)
+        const nextDrop = 50 + Math.random() * 250; // 50–300ms
+        setTimeout(rainLoop, nextDrop);
+      }
     }
+
+    rainLoop();
   });
 });
 </script>
+
 
 
 
