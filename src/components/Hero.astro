@@ -152,8 +152,8 @@ import { siteConfig } from "../config";
 >
   I'm 
   <span id="name-text">
-    <span class="hover-black">D</span>a<span class="hover-black">v</span>i<span class="hover-black">d</span> 
-    <span class="hover-black">G</span>lover
+    <span>D</span><span>v</span>i<span>d</span> 
+    <span>G</span>lover
   </span>
 </h1>
 
@@ -166,9 +166,10 @@ import { siteConfig } from "../config";
     transition: color 0.3s ease;
   }
 
-  #name-text:hover .hover-black {
-    color: black;
+  #name_text hover: span{
+    color: #1f2937;
   }
+
 :global(.dvd) {
   background: url('/dvd.png') no-repeat center / contain;
   position: absolute;
