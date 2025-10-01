@@ -167,7 +167,7 @@ import { siteConfig } from "../config";
   }
 
   #name-text:hover .hover-black {
-    color: black;
+    color: #1f2937;
   }
 :global(.dvd) {
   background: url('/dvd.png') no-repeat center / contain;
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Automatically trigger storm after a short delay on page load
-  setTimeout(startStorm, 2000); // wait 2s, then storm
+  setTimeout(startStorm, 500); // wait half a second, then storm
 
   // Listen for typing "storm" to retrigger
   let buffer = "";
