@@ -298,8 +298,7 @@ import { siteConfig } from "../config";
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
-  const button = document.getElementById("dvd-storm-btn");
-  const hero   = document.getElementById("hero");
+  const hero = document.getElementById("hero");
 
   function spawnDVD() {
     const dvd = document.createElement("div");
@@ -329,24 +328,40 @@ document.addEventListener("DOMContentLoaded", () => {
     setTimeout(() => dvd.remove(), duration * 1000);
   }
 
-  button.addEventListener("click", () => {
-    const stormDuration = 3000 + Math.random() * 2000; // 3–5 seconds
+  function startStorm() {
+    const stormDuration = 3000 + Math.random() * 2000; // 3–5s
     const stormEnd = Date.now() + stormDuration;
 
     function rainLoop() {
       if (Date.now() < stormEnd) {
         spawnDVD();
 
-        // Random delay before next DVD spawns (like natural rain)
+        // Random delay before next DVD spawns
         const nextDrop = 50 + Math.random() * 250; // 50–300ms
         setTimeout(rainLoop, nextDrop);
       }
     }
 
     rainLoop();
+  }
+
+  // Automatically trigger storm after a short delay on page load
+  setTimeout(startStorm, 2000); // wait 2s, then storm
+
+  // Listen for typing "storm" to retrigger
+  let buffer = "";
+  document.addEventListener("keydown", (e) => {
+    buffer += e.key.toLowerCase();
+    if (buffer.endsWith("storm")) {
+      startStorm();
+      buffer = ""; // reset so you can type it again
+    }
+    // keep buffer small
+    if (buffer.length > 10) buffer = buffer.slice(-10);
   });
 });
 </script>
+
 
 
 
