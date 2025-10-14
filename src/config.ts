@@ -29,50 +29,50 @@ export const siteConfig = {
     "Git/GitHub",
     "Docker",
   ],
-  projects: [
-    {
-      name: "SlugHub - CruzHacks 2025",
-      description:
-        "Multi-page student app for UCSC: schedule input with bus timing, events integration with add-to-schedule, and anonymous class forums. Auth with MongoDB + bcrypt; course catalog/forums powered by scrapers and real data validation.",
-      link: "https://github.com/dvdthr5/SlugHub",
-      skills: ["PyQt6", "MongoDB", "Web Scraping", "Authentication"],
-    },
-    {
-      name: "SaveOurSlug - CruzHacks 2024",
-      description:
-        "Hackathon project promoting campus sustainability. Gamified eco-friendly actions with Flask + JS, allowing students to log activities, compete on leaderboards, and boost awareness.",
-      link: "https://github.com/dvdthr5/SaveOurSlugs",
-      skills: ["Flask", "JavaScript", "Web Development"],
-    },
-    {
-      name: "Stock Dashboard",
-      description:
-        "Python-based dashboard for real-time stock tracking and visualization. Uses APIs for live feeds with Pandas + Matplotlib analytics, allowing trend comparisons and portfolio insights.",
-      link: "https://github.com/dvdthr5/personal-finance-dashboard",
-      skills: ["Python", "Pandas", "Matplotlib", "APIs"],
-    },
-    {
-      name: "Pokémon Card Chrome Extension",
-      description:
-        "Browser extension enhancing eBay listings with enriched Pokémon card metadata via PokéAPI and overlays of market values from PriceCharting for quick deal checks.",
-      link: "https://github.com/dvdthr5",
-      skills: ["React", "Chrome Extension APIs", "Node.js", "Web Scraping"],
-    },
-    {
-      name: "Rover Dual-Camera Ops",
-      description:
-        "Software for rover dual-camera operations and telemetry. Implemented camera control loops, supported integration with hardware subsystems, and contributed to chassis/arm assembly and testing.",
-      link: "https://github.com/dvdthr5",
-      skills: ["C/C++", "Python", "OpenCV", "Hardware Integration"],
-    },
-    {
-      name: "William the Bill Bot",
-      description:
-        "Python + Tkinter app for shared expense management. Splits bills evenly, tracks who owes whom, and includes a ‘Paid’ feature that resolves debts while preserving history in SQLite.",
-      link: "https://github.com/dvdthr5/William-BillOrganizer",
-      skills: ["Python", "Tkinter", "SQLite"],
-    },
-  ],
+projects: [
+  {
+    name: "SlugHub (CruzHacks 2025)",
+    description:
+      "Full-stack student productivity platform for UCSC. Features class scheduling with bus timing integration, event syncing, and anonymous class forums. Built with Flask + MongoDB and PyQt6 frontend; includes authentication, course scraping, and persistent user data.",
+    link: "https://github.com/dvdthr5/SlugHub",
+    skills: ["PyQt6", "Flask", "MongoDB", "TypeScript", "Web Scraping", "Authentication"],
+  },
+  {
+    name: "SaveOurSlug (CruzHacks 2024)",
+    description:
+      "Gamified sustainability app that encourages eco-friendly habits through leaderboards and activity tracking. Designed REST APIs with Flask and MongoDB for real-time updates and user management.",
+    link: "https://github.com/dvdthr5/SaveOurSlugs",
+    skills: ["Flask", "JavaScript", "MongoDB", "Web Development"],
+  },
+  {
+    name: "Neural Network Card Classifier",
+    description:
+      "Trained a convolutional neural network on 120k+ images for Pokémon card classification. Automated dataset creation and preprocessing in Python; deployed inference using FastAPI and Docker for modular testing and scalability.",
+    link: "https://github.com/dvdthr5",
+    skills: ["Python", "TensorFlow", "FastAPI", "Docker", "Machine Learning"],
+  },
+  {
+    name: "Full-Stack Stock Dashboard",
+    description:
+      "Data-driven web application for tracking stock market trends and visualizing portfolio performance. Implemented Flask APIs, JavaScript frontend updates, and MongoDB storage for live data caching and persistence.",
+    link: "https://github.com/dvdthr5/personal-finance-dashboard",
+    skills: ["Flask", "JavaScript", "MongoDB", "APIs"],
+  },
+  {
+    name: "UCSC Rover Computer Vision System",
+    description:
+      "Developed computer vision software for object detection and tracking on the UCSC robotics team rover. Implemented real-time image processing in Python and C++ using OpenCV, with modular data logging and visualization tools.",
+    link: "https://github.com/dvdthr5",
+    skills: ["C++", "Python", "OpenCV", "Image Processing", "Computer Vision"],
+  },
+  {
+    name: "Encryption GUI",
+    description:
+      "Created a desktop application for encrypting and decrypting files using Python’s cryptography libraries. Designed a simple Tkinter interface prioritizing usability and secure key handling for local file operations.",
+    link: "https://github.com/dvdthr5/encryptiongui",
+    skills: ["Python", "Tkinter", "Cryptography", "GUI Design"],
+  },
+],
   experience: [
     {
       company: "UCSC Rover Team",
