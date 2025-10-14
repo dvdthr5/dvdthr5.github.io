@@ -1,6 +1,6 @@
 export const siteConfig = {
   name: "David Glover",
-  title: "Software Engineer",
+  title: "david05glover@gmail.com | 4089661311",
   description:
     "Full-stack engineer specializing in practical ML, data-driven products, and clean UI engineering.",
   accentColor: "#1d4ed8",

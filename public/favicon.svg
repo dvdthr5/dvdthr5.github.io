@@ -1,10 +1,13 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs>
+    <!-- Lightened base -->
     <radialGradient id="base" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#111"/>
-      <stop offset="70%" stop-color="#222"/>
-      <stop offset="100%" stop-color="#000"/>
+      <stop offset="0%" stop-color="#333"/>   <!-- was #111 -->
+      <stop offset="70%" stop-color="#555"/>  <!-- was #222 -->
+      <stop offset="100%" stop-color="#222"/> <!-- was #000 -->
     </radialGradient>
+
+    <!-- Rainbow unchanged -->
     <linearGradient id="rainbow2" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#ff0040"/>
       <stop offset="25%" stop-color="#ffff00"/>
@@ -14,9 +17,11 @@
     </linearGradient>
   </defs>
 
+  <!-- Outer disc -->
   <circle cx="32" cy="32" r="30" fill="url(#base)" stroke="#000" stroke-width="2"/>
-  <circle cx="32" cy="32" r="30" fill="url(#rainbow2)" fill-opacity="0.25"/>
-  
-  <circle cx="32" cy="32" r="10" fill="#111" stroke="#666" stroke-width="2"/>
-  <circle cx="32" cy="32" r="3" fill="#000"/>
+  <circle cx="32" cy="32" r="30" fill="url(#rainbow2)" fill-opacity="0.3"/> <!-- bumped opacity -->
+
+  <!-- Inner hub -->
+  <circle cx="32" cy="32" r="10" fill="#444" stroke="#888" stroke-width="2"/> <!-- lighter hub -->
+  <circle cx="32" cy="32" r="3" fill="#222"/> <!-- slightly lighter center -->
 </svg>
