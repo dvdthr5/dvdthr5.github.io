@@ -1,18 +1,85 @@
 ---
+const NAME = "David Glover";
+const TITLE = "Computer Science Student · UC Santa Cruz";
+const EMAIL = "dvglover@ucsc.edu";
+const GITHUB = "https://github.com/dvdthrower";
+const LINKEDIN = "https://linkedin.com/in/davidvglover";
+const RESUME = "/davidGloverResume2025.pdf";   // put PDF in /public
+const VCF = "/DavidGlover.vcf";                // put .vcf in /public
+const PHOTO = "/dvd.png";                      // put an image in /public
 ---
+
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>David Glover — Student Card</title>
+    <title>{NAME} — Digital Card</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap Icons for simple icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+      :root {
+        --bg:#0c2340;           /* UCSC blue */
+        --fg:#ffffff;
+        --muted:#c3c8d4;
+        --accent:#ffc425;       /* UCSC gold */
+        --card:#101b34;
+        --border:#223055;
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;background:radial-gradient(1200px 600px at 80% -10%,#1a2b58 0%,#0c2340 45%,#081428 100%);
+        color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+        min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px;
+      }
+      .wrap{max-width:720px;width:100%}
+      .card{
+        background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0)) , var(--card);
+        border:1px solid var(--border); border-radius:20px; padding:28px;
+        display:grid; grid-template-columns:120px 1fr; gap:24px; box-shadow:0 8px 30px rgba(0,0,0,.25);
+      }
+      .photo{
+        width:120px;height:120px;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:#0a1530;
+      }
+      .photo img{width:100%;height:100%;object-fit:cover}
+      h1{margin:0 0 6px 0;font-size:28px;letter-spacing:.2px}
+      .title{color:var(--muted);margin:0 0 12px 0}
+      .links{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+      .btn{
+        display:inline-flex;align-items:center;gap:8px;
+        padding:10px 14px;border-radius:10px;border:1px solid var(--border);
+        text-decoration:none;color:var(--fg);background:#0f1a33;transition:transform .06s ease, border-color .2s ease, background .2s ease;
+      }
+      .btn:hover{transform:translateY(-1px);border-color:#3651a8;background:#142044}
+      .btn.accent{background:var(--accent);color:#000;border-color:#e3b420}
+      .btn.accent:hover{background:#eabf29}
+      .meta{margin-top:10px;color:var(--muted);font-size:14px}
+      @media (max-width:640px){ .card{grid-template-columns:1fr; text-align:center}
+        .photo{margin:0 auto}
+        .links{justify-content:center}
+      }
+      .footer{margin-top:14px;font-size:12px;color:#98a2b3;text-align:center}
+    </style>
   </head>
-  <body style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;font-family:sans-serif;">
-    <img src="/dvd.png" alt="Logo" width="100" style="border-radius:50%;margin-bottom:1rem;" />
-    <h1>David Glover</h1>
-    <p>Computer Science Student · UC Santa Cruz</p>
-    <p><a href="mailto:dvglover@ucsc.edu">dvglover@ucsc.edu</a></p>
-    <p><a href="https://github.com/dvdthrower">GitHub</a> | <a href="https://linkedin.com/in/davidvglover">LinkedIn</a></p>
-    <p><a href="/davidGloverResume2025.pdf" target="_blank">View Resume</a></p>
-    <p><a href="/DavidGlover.vcf" download>📇 Save to Contacts</a></p>
+  <body>
+    <div class="wrap">
+      <div class="card">
+        <div class="photo">
+          <img src={PHOTO} alt="Profile photo">
+        </div>
+        <div>
+          <h1>{NAME}</h1>
+          <p class="title">{TITLE}</p>
+          <div class="links">
+            <a class="btn" href={"mailto:"+EMAIL}><i class="bi bi-envelope"></i><span>{EMAIL}</span></a>
+            <a class="btn" href={GITHUB} target="_blank" rel="noopener"><i class="bi bi-github"></i><span>GitHub</span></a>
+            <a class="btn" href={LINKEDIN} target="_blank" rel="noopener"><i class="bi bi-linkedin"></i><span>LinkedIn</span></a>
+            <a class="btn" href={RESUME} target="_blank" rel="noopener"><i class="bi bi-file-earmark-text"></i><span>Resume</span></a>
+            <a class="btn accent" href={VCF} download><i class="bi bi-person-plus"></i><span>Save to Contacts</span></a>
+          </div>
+          <p class="meta">Tap your phone on my Flipper NFC to open this page. Then add me to contacts with one tap.</p>
+        </div>
+      </div>
+      <div class="footer">© {new Date().getFullYear()} {NAME} · dvdthrower.com</div>
+    </div>
   </body>
 </html>
