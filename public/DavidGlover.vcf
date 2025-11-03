@@ -1,0 +1,12 @@
+BEGIN:VCARD
+VERSION:4.0
+N:Glover;David;;;
+FN:David Glover
+KIND:individual
+ORG:University of California, Santa Cruz
+TITLE:Computer Science Student
+EMAIL;TYPE=work:dvglover@ucsc.edu
+TEL;TYPE=cell:tel:+1-555-012-3456
+URL:https://www.dvdthrower.com
+NOTE:GitHub https://github.com/dvdthrower • LinkedIn https://linkedin.com/in/davidvglover
+END:VCARD
