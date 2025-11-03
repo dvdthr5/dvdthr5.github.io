@@ -1,0 +1,18 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Card from "../components/Card.astro";
+---
+
+<BaseLayout
+  title="David Glover — Digital Card"
+  description="Computer Science Student at UC Santa Cruz. Contact and portfolio links.">
+  <Card
+    name="David Glover"
+    position="Computer Science Student · UC Santa Cruz"
+    aboutMe={`I'm a Computer Science student at UC Santa Cruz who loves building practical tools that connect software and hardware. I enjoy embedded systems, Python, and creative technical projects like my Flipper Zero NFC business card.`}
+    linkedin="https://linkedin.com/in/davidvglover"
+    github="https://github.com/dvdthrower"
+    cvLink="/files/davidGloverResume2025.pdf"
+    profileImage="/images/dvd.png"
+  />
+</BaseLayout>
