@@ -33,11 +33,14 @@
 /* CARD */
 .card-container{
     display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 650px;
     height: auto;
     background: linear-gradient(to right,#024945, #12a89c); /* #2FEBD4, #DEFFFD*/
     border-radius: 12px;
     box-shadow: 1px 7px 10px 2px rgba(0, 0, 0, .15);
+    padding: 40px 50px;
 }
 
 .descripcion{
