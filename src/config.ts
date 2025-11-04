@@ -75,6 +75,17 @@ projects: [
 ],
   experience: [
     {
+      company: "New Instance Coffee",
+      title: "Software and Data Intern",
+      dateRange: "June 2024 - Present",
+      bullets: [
+        "Automated Python data pipelines and MySQL queries to analyze product performance metrics.",
+        "Used Git for version control and deployed containerized services to test web optimizations.",
+        "Wrote Python scripts to monitor user activity and automate report generation for management.",
+        "Designed and implemented lightweight backend workflows improving page load and analytics speed.",
+      ],
+    },
+    {
       company: "UCSC Rover Team",
       title: "Lead Programmer",
       dateRange: "Sept 2024 – Present",
