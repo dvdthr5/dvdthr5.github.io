@@ -75,9 +75,18 @@ projects: [
 ],
   experience: [
     {
+      company: "JLab Smart Sensing",
+      title: "Research Assistant",
+      dateRange: "December 2025 - Present",
+      bullets: [
+        "Primarily focused on web dev, backend work, and creating visualization tools for the ENTs project",
+        "Currently leading the design process for a new irrigation based site"
+      ]
+    },
+    {
       company: "New Instance Coffee",
       title: "Software and Data Intern",
-      dateRange: "June 2024 - Present",
+      dateRange: "June 2024 - January 2026",
       bullets: [
         "Automated Python data pipelines and MySQL queries to analyze product performance metrics.",
         "Used Git for version control and deployed containerized services to test web optimizations.",
