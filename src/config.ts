@@ -124,7 +124,7 @@ projects: [
     },
   ],
   resume: {
-    link: "/davidGloverResume2025.pdf",
+    link: "/DavidGloverResume2026.pdf",
     label: "View Resume",
   },
 };
