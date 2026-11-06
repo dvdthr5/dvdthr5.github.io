@@ -194,7 +194,7 @@ projects: [
       school: "University of California, Santa Cruz",
       degree: "Bachelor of Science in Computer Science",
       dateRange: "2023 – 2027",
-      achievements: ["3.8 GPA", "Dean's List"],
+      achievements: ["Honors", "3.8 GPA", "Dean's List"],
     },
   ],
   resume: {
