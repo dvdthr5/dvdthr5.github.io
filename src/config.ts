@@ -38,7 +38,7 @@ projects: [
     skills: [
       "React",
       "Python",
-      "Flask",
+      "FastAPI",
       "PostgreSQL",
       "Socket.IO",
       "REST APIs",
