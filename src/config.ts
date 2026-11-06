@@ -74,47 +74,59 @@ projects: [
   },
 ],
   experience: [
-    {
-      company: "JLab Smart Sensing",
-      title: "Research Assistant",
-      dateRange: "December 2025 - Present",
-      bullets: [
-        "Primarily focused on web dev, backend work, and creating visualization tools for the ENTs project",
-        "Currently leading the design process for a new irrigation based site"
-      ]
-    },
-    {
-      company: "New Instance Coffee",
-      title: "Software and Data Intern",
-      dateRange: "June 2024 - January 2026",
-      bullets: [
-        "Automated Python data pipelines and MySQL queries to analyze product performance metrics.",
-        "Used Git for version control and deployed containerized services to test web optimizations.",
-        "Wrote Python scripts to monitor user activity and automate report generation for management.",
-        "Designed and implemented lightweight backend workflows improving page load and analytics speed.",
-      ],
-    },
-    {
-      company: "UCSC Rover Team",
-      title: "Lead Programmer",
-      dateRange: "Sept 2024 – Present",
-      bullets: [
-        "Leading the software division of a 40+ member interdisciplinary team competing in the 2025 University Rover Challenge (URC).",
-        "Developing rover control systems in Python/C++ with OpenCV-based vision pipelines.",
-        "Trained incoming members on Git, Python, and SSH workflows to integrate them into the dev team.",
-      ],
-    },
-    {
-      company: "The Buttery Bakery",
-      title: "Supervisor",
-      dateRange: "July 2024 – Present",
-      bullets: [
-        "Promoted to supervisor within six months in a high-volume café.",
-        "Manage and train a team of 10+ employees; oversee scheduling, operations, and customer service.",
-        "Maintained efficient workflows and high morale in a fast-paced environment.",
-      ],
-    },
-  ],
+  {
+    company: "JLab Smart Sensing",
+    title: "Research Pathways Fellow",
+    dateRange: "June 2026 - March 2027",
+    bullets: [
+      "Designed machine learning experiments for RF-based soil sensing across four field and laboratory datasets, including cross-site validation and feature ablation.",
+      "Built reusable ML evaluation pipelines comparing regression models across handcrafted, PCA, kernel PCA, autoencoder, and CNN-based features.",
+      "Developed an end-to-end radar signal-processing pipeline to transform raw radar captures into soil permittivity estimates.",
+      "Contributed experimental methodology, ML evaluation, and analysis to a research paper on non-invasive soil compaction sensing.",
+      "Built a multithreaded Python tool to concurrently collect and log measurements from three sensor systems.",
+      "Developed curriculum and onboarding materials for Introduction to Research for Engineers."
+    ]
+  },
+  {
+    company: "JLab Smart Sensing",
+    title: "Undergraduate Researcher",
+    dateRange: "January 2026 - Present",
+    bullets: [
+      "Led development of NodeFlow, a full-stack irrigation monitoring and control platform used across four farms.",
+      "Designed REST APIs and backend services for sensor ingestion, hardware management, authentication, and historical data retrieval.",
+      "Built an automated irrigation engine using real-time sensor measurements, configurable thresholds, and manual overrides.",
+      "Implemented real-time sensor updates with Socket.IO and simulated hardware services for end-to-end testing.",
+      "Improved application reliability through database migrations, automated testing, GitHub Actions CI/CD, and containerized AWS deployment."
+    ]
+  },
+  {
+    company: "New Instance Coffee",
+    title: "Software and Data Intern",
+    dateRange: "June 2024 - January 2026",
+    bullets: [
+      "Automated Python data pipelines and MySQL queries to analyze product performance metrics and generate management reports.",
+      "Developed backend workflows and deployed containerized services to improve web performance and analytics."
+    ]
+  },
+  {
+    company: "UCSC Rover Team",
+    title: "Lead Programmer",
+    dateRange: "September 2024 - Present",
+    bullets: [
+      "Led software development for a 40+ member interdisciplinary team competing in the University Rover Challenge.",
+      "Developed rover control systems using Python, C++, and OpenCV while mentoring members on Git, Python, and SSH workflows."
+    ]
+  },
+  {
+    company: "The Buttery Bakery",
+    title: "Supervisor",
+    dateRange: "July 2024 - Present",
+    bullets: [
+      "Promoted to supervisor within six months, managing and training 10+ employees in a high-volume café.",
+      "Oversaw daily operations, scheduling, and customer service while maintaining efficient team workflows."
+    ]
+  }
+],
   education: [
     {
       school: "University of California, Santa Cruz",
