@@ -136,7 +136,7 @@ projects: [
     },
   ],
   resume: {
-    link: "/DavidGloverResume2026.pdf",
+    link: "/DavidGlover_Resume2026.pdf",
     label: "View Resume",
   },
 };
