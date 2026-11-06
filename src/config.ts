@@ -31,46 +31,108 @@ export const siteConfig = {
   ],
 projects: [
   {
+    name: "NodeFlow",
+    description:
+      "Led development of a full-stack irrigation monitoring and control platform used across four farms. Designed REST APIs and backend services for sensor ingestion, hardware management, authentication, and historical data retrieval. Built an automated irrigation engine with configurable sensor thresholds, real-time Socket.IO updates, and manual overrides. Implemented automated testing, database migrations, CI/CD pipelines, and containerized AWS deployment.",
+    link: "https://github.com/jlab-sensing/NodeFlow",
+    skills: [
+      "React",
+      "Python",
+      "Flask",
+      "PostgreSQL",
+      "Socket.IO",
+      "REST APIs",
+      "Docker",
+      "AWS",
+      "GitHub Actions",
+      "Alembic"
+    ],
+  },
+  {
+    name: "ArrowBerry",
+    description:
+      "Developed a full-stack mobile application that converts grocery receipts into structured pantry inventories and recommends recipes based on available ingredients and spoilage priority. Designed a Supabase relational database and authentication system, integrated Gemini-based receipt processing, and built automated recipe scraping and ingredient-parsing pipelines.",
+    link: "https://github.com/dvdthr5",
+    skills: [
+      "React Native",
+      "TypeScript",
+      "Expo",
+      "Supabase",
+      "PostgreSQL",
+      "Gemini",
+      "Jest",
+      "Web Scraping"
+    ],
+  },
+  {
+    name: "Custom HTTP Server",
+    description:
+      "Built a multithreaded HTTP/1.0 server in C using POSIX sockets, supporting concurrent client connections and static file serving. Implemented HTTP request parsing, header validation, URI handling, and Content-Length support. Tested memory safety and correctness using Valgrind.",
+    link: "https://github.com/dvdthr5",
+    skills: [
+      "C",
+      "POSIX Sockets",
+      "Multithreading",
+      "HTTP",
+      "Networking",
+      "Systems Programming",
+      "Valgrind"
+    ],
+  },
+  {
     name: "SlugHub (CruzHacks 2025)",
     description:
-      "Full-stack student productivity platform for UCSC. Features class scheduling with bus timing integration, event syncing, and anonymous class forums. Built with Flask + MongoDB and PyQt6 frontend; includes authentication, course scraping, and persistent user data.",
+      "Developed a full-stack student productivity platform integrating class scheduling, bus arrival times, event synchronization, and anonymous course forums. Built Flask backend services with MongoDB persistence, user authentication, and automated course data scraping.",
     link: "https://github.com/dvdthr5/SlugHub",
-    skills: ["PyQt6", "Flask", "MongoDB", "TypeScript", "Web Scraping", "Authentication"],
+    skills: [
+      "Python",
+      "PyQt6",
+      "Flask",
+      "MongoDB",
+      "Web Scraping",
+      "Authentication"
+    ],
   },
   {
     name: "SaveOurSlug (CruzHacks 2024)",
     description:
-      "Gamified sustainability app that encourages eco-friendly habits through leaderboards and activity tracking. Designed REST APIs with Flask and MongoDB for real-time updates and user management.",
+      "Built a gamified sustainability application encouraging environmentally conscious habits through activity tracking and competitive leaderboards. Developed Flask REST APIs and MongoDB data models for user management, activity persistence, and leaderboard updates.",
     link: "https://github.com/dvdthr5/SaveOurSlugs",
-    skills: ["Flask", "JavaScript", "MongoDB", "Web Development"],
+    skills: [
+      "Python",
+      "Flask",
+      "JavaScript",
+      "MongoDB",
+      "REST APIs"
+    ],
   },
   {
     name: "Neural Network Card Classifier",
     description:
-      "Trained a convolutional neural network on 120k+ images for Pokémon card classification. Automated dataset creation and preprocessing in Python; deployed inference using FastAPI and Docker for modular testing and scalability.",
+      "Trained a convolutional neural network to classify Pokémon cards using a dataset of over 120,000 images. Automated dataset collection and preprocessing with Python, and developed a containerized FastAPI inference service for model deployment and testing.",
     link: "https://github.com/dvdthr5",
-    skills: ["Python", "TensorFlow", "FastAPI", "Docker", "Machine Learning"],
+    skills: [
+      "Python",
+      "TensorFlow",
+      "CNN",
+      "FastAPI",
+      "Docker",
+      "Machine Learning"
+    ],
   },
   {
     name: "Full-Stack Stock Dashboard",
     description:
-      "Data-driven web application for tracking stock market trends and visualizing portfolio performance. Implemented Flask APIs, JavaScript frontend updates, and MongoDB storage for live data caching and persistence.",
+      "Developed a full-stack financial dashboard for monitoring stock market trends and visualizing portfolio performance. Implemented Flask REST APIs, dynamic JavaScript visualizations, and MongoDB storage for market data caching and persistent portfolio tracking.",
     link: "https://github.com/dvdthr5/personal-finance-dashboard",
-    skills: ["Flask", "JavaScript", "MongoDB", "APIs"],
-  },
-  {
-    name: "UCSC Rover Computer Vision System",
-    description:
-      "Developed computer vision software for object detection and tracking on the UCSC robotics team rover. Implemented real-time image processing in Python and C++ using OpenCV, with modular data logging and visualization tools.",
-    link: "https://github.com/dvdthr5",
-    skills: ["C++", "Python", "OpenCV", "Image Processing", "Computer Vision"],
-  },
-  {
-    name: "Encryption GUI",
-    description:
-      "Created a desktop application for encrypting and decrypting files using Python’s cryptography libraries. Designed a simple Tkinter interface prioritizing usability and secure key handling for local file operations.",
-    link: "https://github.com/dvdthr5/encryptiongui",
-    skills: ["Python", "Tkinter", "Cryptography", "GUI Design"],
+    skills: [
+      "Python",
+      "Flask",
+      "JavaScript",
+      "MongoDB",
+      "REST APIs",
+      "Data Visualization"
+    ],
   },
 ],
   experience: [
